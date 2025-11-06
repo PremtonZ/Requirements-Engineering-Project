@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="44f089c4-6175-45ad-8a13-aab32b3b6e57" name="Changes" comment="" />
+    <list default="true" id="53ee1de5-4659-4954-9e8f-1eb87579218f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,20 +13,40 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "denizmertkaya"
+  }
 }]]></component>
-  <component name="ProjectId" id="356Ih5REkUHXRO5sjn2Kpfll4VR" />
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/PremtonZ/Requirements-Engineering-Project.git",
+    "accountId": "7b9c3c3e-201f-4c41-afd6-37b3b7795194"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="356HvPLfEYPrfgpaSuu7QPwWtE0" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/deniz/Documents/GitHub/Requirements-Engineering-Project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -40,12 +60,12 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="44f089c4-6175-45ad-8a13-aab32b3b6e57" name="Changes" comment="" />
-      <created>1762424213934</created>
+      <changelist id="53ee1de5-4659-4954-9e8f-1eb87579218f" name="Changes" comment="" />
+      <created>1762423830602</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1762424213934</updated>
-      <workItem from="1762424215354" duration="4000" />
+      <updated>1762423830602</updated>
+      <workItem from="1762423832225" duration="379000" />
     </task>
     <servers />
   </component>
