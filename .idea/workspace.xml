@@ -4,7 +4,52 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="53ee1de5-4659-4954-9e8f-1eb87579218f" name="Changes" comment="" />
+    <list default="true" id="53ee1de5-4659-4954-9e8f-1eb87579218f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/main/java/org/example/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/main/java/org/example/Charger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/main/java/org/example/ChargingInvoiceItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/main/java/org/example/ECSManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/main/java/org/example/InvoiceItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/main/java/org/example/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/main/java/org/example/Site.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/main/java/org/example/TopUpInvoiceItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/ChargingPointStatusSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/CreditSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/CustomerAccountSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/CustomerLoginSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/DisplayChargingPointStatusSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/InfrastructureSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/LoginSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/PricesSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/TestContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Admin_Manage_Credit.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Charge_Car.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Customer_Inform_Invoice_Status.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Customer_Login.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Display_Charging_Point_Status.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Inform_Invoice_Status.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Login.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Manage_Accounts.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Manage_Charging_Point_Status.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Manage_Credit.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Manage_Customer_Account.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Manage_Infrastructure.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/Manage_Prices.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ElectricChargingStation/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ElectricChargingStation/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/.idea/runConfigurations.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/main/java/org/example/ElectricChargingStationNetwork.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/RunCucumberTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/RunCucumberTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/java/org/example/StepDefinitions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/test/resources/org/example/example.feature" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,43 +58,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "denizmertkaya"
-  }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/PremtonZ/Requirements-Engineering-Project.git",
-    "accountId": "7b9c3c3e-201f-4c41-afd6-37b3b7795194"
-  }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
   <component name="ProjectId" id="356HvPLfEYPrfgpaSuu7QPwWtE0" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/deniz/Documents/GitHub/Requirements-Engineering-Project",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ElectricChargingStation/ElectricChargingStation/src/main/java/org/example" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -58,6 +81,7 @@
       </set>
     </attachedChunks>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="53ee1de5-4659-4954-9e8f-1eb87579218f" name="Changes" comment="" />
@@ -66,10 +90,22 @@
       <option name="presentableId" value="Default" />
       <updated>1762423830602</updated>
       <workItem from="1762423832225" duration="379000" />
+      <workItem from="1764163971053" duration="1141000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
