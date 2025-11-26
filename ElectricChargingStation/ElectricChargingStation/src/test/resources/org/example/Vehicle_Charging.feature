@@ -15,11 +15,11 @@ Feature: Charging Vehicle
         Then I see all the charging points
         And I select the charging point "AC_1"
         And I see the details of the charging point:
-            | location                  | "Wien"          |
-            | charging station          | "Stephansplatz" |
-            | charging point            | "AC_1"          |
-            | charging mode             | "AC"            |
-            | price kWh                 | "5.83 EUR"      |
+            | location                  | Wien          |
+            | charging station          | Stephansplatz |
+            | charging point            | AC_1          |
+            | charging mode             | AC            |
+            | price kWh                 | 5.83 EUR      |
         And a button that says "Ladevorgang starten"
 
 
