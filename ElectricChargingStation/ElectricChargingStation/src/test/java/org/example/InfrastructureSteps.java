@@ -9,6 +9,7 @@ public class InfrastructureSteps {
     private Site createdSite;
     private Charger createdCharger;
 
+    // Standort anlegen
     @When("I create a location with name {string}")
     public void iCreateALocationWithName(String locationName) {
         try {
@@ -31,6 +32,7 @@ public class InfrastructureSteps {
         assertNotNull(foundSite, "Location should be available in network");
     }
 
+    // Ladepunkt hinzufügen
     @When("I add a charging point with name {string} to location {string}")
     public void iAddAChargingPointWithNameToLocation(String chargerName, String locationName) {
         try {
@@ -54,6 +56,7 @@ public class InfrastructureSteps {
         assertNotNull(foundCharger, "Charging point should be available");
     }
 
+    // Ladepunkt-Typ festlegen (AC/DC)
     @When("I set the charging point type to {string} for charging point {string} at location {string}")
     public void iSetTheChargingPointTypeToForChargingPointAtLocation(String type, String chargerName, String locationName) {
         Charger charger = TestContext.network.getCharger(locationName, chargerName);
