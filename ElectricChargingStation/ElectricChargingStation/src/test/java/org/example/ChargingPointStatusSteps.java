@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ChargingPointStatusSteps  {
 
+    // Ladepunktstandort wählen
     @When("I select location {string}")
     public void iSelectLocation(String locationName) {
         TestContext.selectedLocation = TestContext.network.getSite(locationName);
@@ -25,6 +26,7 @@ public class ChargingPointStatusSteps  {
         assertNotNull(site, "Location should exist");
     }
 
+    // Ladepunktstatus anzeigen
     @When("I display the charging point status for location {string}")
     public void iDisplayTheChargingPointStatusForLocation(String locationName) {
         TestContext.selectedLocation = TestContext.network.getSite(locationName);

@@ -9,6 +9,8 @@ public class CreditSteps  {
     private Account viewedAccount;
     private double initialBalance;
 
+
+    // Guthaben anzeigen
     @When("I view the credit balance for customer account {string}")
     public void iViewTheCreditBalanceForCustomerAccount(String username) {
         viewedAccount = TestContext.network.getAccount(username);
@@ -26,6 +28,7 @@ public class CreditSteps  {
         assertTrue(viewedAccount.getCredit() >= 0, "Credit balance should be non-negative");
     }
 
+    // Guthaben aufladen 
     @When("I top up {double} credits to customer account {string}")
     public void iTopUpCreditsToCustomerAccount(double amount, String username) {
         Account account = TestContext.network.getAccount(username);

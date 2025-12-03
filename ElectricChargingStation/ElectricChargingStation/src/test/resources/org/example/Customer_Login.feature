@@ -3,7 +3,7 @@ Feature: Customer Login
   I want to login to my account,
   so that I can access my account and use the charging services
 
-  Scenario: Kundenkonto einloggen
+  Scenario: Login Customer Account
     Given I am not logged in as customer
     And a customer account with username "Max" exists
     When I login as customer with username "Max"
