@@ -28,4 +28,4 @@ Feature: Manage Charging Point Status
   // MVP 2
   Scenario: Read Charging Point
   
-  Scenario: Update Charging Point Status Deniz
+  Scenario: Update Charging Point Status

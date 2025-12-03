@@ -1,4 +1,4 @@
-Feature: Manage Charging Station Status Deniz
+Feature: Manage Charging Station Status
 
     // MVP 2
     Scenario: Read Charging Station

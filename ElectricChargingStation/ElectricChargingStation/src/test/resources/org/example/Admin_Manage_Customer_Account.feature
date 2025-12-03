@@ -21,7 +21,7 @@ Feature: Admin Manage Customer Account
     And the account information is displayed correctly
 
   // MVP 2
-  Scenario: Deactivate Customer Account
+  Scenario: Update Customer Account
 
   Scenario: Delete Customer Account
 
