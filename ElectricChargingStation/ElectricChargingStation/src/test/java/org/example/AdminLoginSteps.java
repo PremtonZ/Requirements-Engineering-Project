@@ -7,9 +7,9 @@ import io.cucumber.java.en.When;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LoginSteps {
+public class AdminLoginSteps {
 
-    // Admin-Konto einloggen
+    // Login Admin Account
     @Given("I am not logged in")
     public void iAmNotLoggedIn() {
         TestContext.isLoggedIn = false;
@@ -48,7 +48,7 @@ public class LoginSteps {
         assertTrue(TestContext.canAccessDashboard, "User should be able to access admin dashboard");
     }
 
-    // Admin-Konto ausloggen
+    // Logout Admin Account
     @When("I logout as admin")
     public void iLogoutAsAdmin() {
         TestContext.isLoggedIn = false;
@@ -164,3 +164,4 @@ public class LoginSteps {
         TestContext.network.setSitePrices(location, acKwh, acPpm, dcKwh, dcPpm);
     }
 }
+

@@ -5,12 +5,12 @@ import io.cucumber.java.en.When;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CreditSteps  {
+public class AdminManageCreditsSteps {
     private Account viewedAccount;
     private double initialBalance;
 
 
-    // Guthaben anzeigen
+    // Show Customer Balance
     @When("I view the credit balance for customer account {string}")
     public void iViewTheCreditBalanceForCustomerAccount(String username) {
         viewedAccount = TestContext.network.getAccount(username);
@@ -28,7 +28,7 @@ public class CreditSteps  {
         assertTrue(viewedAccount.getCredit() >= 0, "Credit balance should be non-negative");
     }
 
-    // Guthaben aufladen 
+    // Top-Up Customer Balance
     @When("I top up {double} credits to customer account {string}")
     public void iTopUpCreditsToCustomerAccount(double amount, String username) {
         Account account = TestContext.network.getAccount(username);

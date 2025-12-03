@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DisplayChargingPointStatusSteps {
 
-    // Standort anzeigen
+    // Show Location
     @When("I view the location {string}")
     public void iViewTheLocation(String locationName) {
         try {
@@ -44,7 +44,7 @@ public class DisplayChargingPointStatusSteps {
         assertNotNull(TestContext.selectedLocation.getLocation(), "Location name should be set");
     }
 
-    // Ladepunkt Preis anzeigen (AC/DC)
+    // Read Charging Point Price
     @When("I view the AC charging point price at location {string}")
     public void iViewTheACChargingPointPriceAtLocation(String location) {
         TestContext.selectedLocation = TestContext.network.getSite(location);

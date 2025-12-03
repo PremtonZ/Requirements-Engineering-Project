@@ -5,9 +5,9 @@ import io.cucumber.java.en.When;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ChargingPointStatusSteps  {
+public class ManageChargingPointStatusSteps  {
 
-    // Ladepunktstandort wählen
+    // Select Charging Point Location
     @When("I select location {string}")
     public void iSelectLocation(String locationName) {
         TestContext.selectedLocation = TestContext.network.getSite(locationName);
@@ -26,7 +26,7 @@ public class ChargingPointStatusSteps  {
         assertNotNull(site, "Location should exist");
     }
 
-    // Ladepunktstatus anzeigen
+    // Display Charging Point Status
     @When("I display the charging point status for location {string}")
     public void iDisplayTheChargingPointStatusForLocation(String locationName) {
         TestContext.selectedLocation = TestContext.network.getSite(locationName);
