@@ -4,6 +4,5 @@ Feature: Manage Credit
 
   Scenario: Read Balance
 
-  // MVP 2
   Scenario: Read Balance History
   

@@ -20,9 +20,16 @@ Feature: Admin Manage Customer Account
       | Max      | 200.0   |
     And the account information is displayed correctly
 
-  // MVP 2
   Scenario: Update Customer Account
+    Given I am logged in as admin
+    And a customer account with username "Max" exists
+    When I update the customer account username from "Max" to "MaxMustermann"
+    Then the customer account username is updated to "MaxMustermann"
+    And the account is available in the system with the new username
 
   Scenario: Delete Customer Account
-
-  Scenario: Deactivate Customer Account
+    Given I am logged in as admin
+    And a customer account with username "Max" exists
+    When I delete the customer account with username "Max"
+    Then the customer account with username "Max" is deleted successfully
+    And the account is no longer available in the system

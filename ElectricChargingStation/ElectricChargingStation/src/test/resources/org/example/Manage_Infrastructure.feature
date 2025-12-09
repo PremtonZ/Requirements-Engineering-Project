@@ -24,23 +24,22 @@ Feature: Manage Infrastructure
     Then the charging point "AC_1" at location "Deutschwagram" has type "AC"
     And the charging point type is saved successfully
 
-  // MVP 2  
-  Scenarios: Read Location
+  Scenario: Read Location
   
-  Scenarios: Update Location
+  Scenario: Update Location
   
-  Scenarios: Delete Location
+  Scenario: Delete Location
 
-  Scenarios: Create Charging Station
+  Scenario: Create Charging Station
 
-  Scenarios: Read Charging Station
+  Scenario: Read Charging Station
 
-  Scenarios: Update Charging Station
+  Scenario: Update Charging Station
 
-  Scenarios: Delete Charging Station
+  Scenario: Delete Charging Station
 
-  Scenarios: Read Charging Point
+  Scenario: Read Charging Point
 
-  Scenarios: Update Charging Point
+  Scenario: Update Charging Point
   
-  Scenarios: Delete Charging Point
+  Scenario: Delete Charging Point

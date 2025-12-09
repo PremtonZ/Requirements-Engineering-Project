@@ -31,7 +31,6 @@ Feature: Display Charging Point Status
         And I see that DC price per minute is 3.0
         And the charging point prices are displayed correctly
 
-// MVP 2
     Scenario: Read Charging Point Status
         When I open the charging point "AC_1" details
         Then I see the charging point status being "In Betrieb frei"
