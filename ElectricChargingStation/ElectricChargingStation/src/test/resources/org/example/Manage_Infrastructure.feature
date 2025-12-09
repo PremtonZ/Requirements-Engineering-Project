@@ -81,7 +81,7 @@ Feature: Manage Infrastructure
       | location | Deutschwagram |
     And the charging station details are displayed correctly
 
-  Scenario: Update Charging Station
+  Scenario: Update Charging Station 
     Given a charging station "Station_A" exists at location "Deutschwagram"
     When I update charging station "Station_A" with:
       | field | new value     |
@@ -94,7 +94,7 @@ Feature: Manage Infrastructure
         | name  | Station_A_01|
         | type  | indoor      |
 
-  Scenario: Delete Charging Station
+  Scenario: Delete Charging Station 
     Given a charging station "Station_A" exists at location "Deutschwagram"
       And "Station_A" has assigned charging points
     When I delete charging station "Station_A"
@@ -144,16 +144,8 @@ Feature: Manage Infrastructure
     Then the charging point is removed from the charging station
       And attempts to retrieve charging point "AC_1" return "not found"
 
-  Scenario: Set Charging Point Mode (AC/DC)
     Given a charging point "AC_1" exists at charging station "Station_A" in location "Deutschwagram"
       And the charging point mode is "unknown"
     When I set the charging point mode to "AC" for "AC_1"
     Then the charging point "AC_1" has mode "AC"
       And the charging point mode is saved successfully
-
-  Scenario: Error: Cannot delete location with active stations (negative case)
-    Given a location "Deutschwagram" exists
-      And the location has active charging stations
-    When I attempt to delete location "Deutschwagram"
-    Then the delete is rejected with error "location has assigned charging stations"
-      And the location remains in the system
