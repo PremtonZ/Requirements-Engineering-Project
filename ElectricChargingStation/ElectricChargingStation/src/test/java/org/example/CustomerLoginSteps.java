@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomerLoginSteps  {
 
+    // Login Customer Account
     @When("I login as customer with username {string}")
     public void iLoginAsCustomerWithUsername(String username) {
         try {

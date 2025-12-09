@@ -10,6 +10,7 @@ public class CustomerAccountSteps  {
     private Account createdAccount;
     private Account viewedAccount;
 
+    // Create Customer Account
     @When("I create a customer account with username {string}")
     public void iCreateACustomerAccountWithUsername(String username) {
         try {
@@ -47,6 +48,7 @@ public class CustomerAccountSteps  {
         assertNotNull(foundAccount, "Account should be available in system");
     }
 
+    // Read Customer Account
     @When("I view the customer account with username {string}")
     public void iViewTheCustomerAccountWithUsername(String username) {
         viewedAccount = TestContext.network.getAccount(username);
