@@ -9,7 +9,7 @@ public class Site {
     private double acPpm = 0;
     private double dcKwh = 0;
     private double dcPpm = 0;
-    private final List<Charger> chargers = new ArrayList<Charger>();
+    private final List<ChargingStation> chargingStations = new ArrayList<>();
 
     public Site(String location) {
         this.location = location;
@@ -92,37 +92,43 @@ public class Site {
         setDCPpm(dcPpm);
     }
 
-    public void addCharger(Charger charger) {
-        boolean exists = false;
-        if(charger.getSite() == this) {
-            for(Charger c : chargers) {
-                if (charger.getName().equals(c.getName())) {
-                    exists = true;
-                    break;
+    public void addChargingStation(ChargingStation chargingStation) {
+        if(chargingStation.getSite() == this) {
+            for(ChargingStation cs : chargingStations) {
+                if(cs.getName().equals(chargingStation.getName())) {
+                    throw new IllegalArgumentException("Charging station with this name already exists at this location");
                 }
             }
+            chargingStations.add(chargingStation);
         } else {
-            throw new IllegalArgumentException("The Site registered in the Charger is not the same as the one it is going to be added");
-        }
-        if(!exists) {
-            chargers.add(charger);
+            throw new IllegalArgumentException("The Site registered in the ChargingStation is not the same as the one it is going to be added");
         }
     }
 
-    public void removeCharger(Charger charger) {
-        if(chargers.contains(charger)) {
-            if(!charger.getState().equals("occupied")) {
-                chargers.remove(charger);
+    public void removeChargingStation(ChargingStation chargingStation) {
+        if(chargingStations.contains(chargingStation)) {
+            if(chargingStation.getChargers().isEmpty() ||
+                    chargingStation.getChargers().stream().noneMatch(c -> c.getState().equals("occupied"))) {
+                chargingStations.remove(chargingStation);
             } else {
-                throw new IllegalArgumentException("The Charger is currently in use");
+                throw new IllegalArgumentException("Charging station has chargers in use");
             }
         } else {
-            throw new IllegalArgumentException("Charger does not exists in this Site");
+            throw new IllegalArgumentException("Charging station does not exist at this Site");
         }
     }
 
+    public List<ChargingStation> getChargingStations() {
+        return chargingStations;
+    }
+
+    // Helper method to get all chargers from all charging stations
     public List<Charger> getChargers() {
-        return chargers;
+        List<Charger> allChargers = new ArrayList<>();
+        for(ChargingStation cs : chargingStations) {
+            allChargers.addAll(cs.getChargers());
+        }
+        return allChargers;
     }
 
     @Override
@@ -132,3 +138,4 @@ public class Site {
                 ", DC kWh: "+ dcKwh + ", DC Ppm: "+dcPpm;
     }
 }
+

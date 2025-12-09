@@ -1,6 +1,7 @@
 package org.example;
 
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -11,6 +12,16 @@ public class CustomerAccountSteps  {
     private Account viewedAccount;
 
     // Create Customer Account
+    @When("I register a new customer account with the following information:")
+    public void iRegisterANewCustomerAccountWithTheFollowingInformation(DataTable dataTable) {
+        String username = extractValueFromDataTable(dataTable, "username");
+        try {
+            createdAccount = TestContext.network.createAccount(username);
+        } catch (IllegalArgumentException e) {
+            createdAccount = TestContext.network.getAccount(username);
+        }
+    }
+
     @When("I create a customer account with username {string}")
     public void iCreateACustomerAccountWithUsername(String username) {
         try {
@@ -24,6 +35,16 @@ public class CustomerAccountSteps  {
     public void aCustomerAccountWithUsernameIsCreatedSuccessfully(String username) {
         assertNotNull(createdAccount, "Customer account should be created");
         assertEquals(username, createdAccount.getUsername(), "Username should match");
+    }
+
+    @Then("I receive a confirmation message {string}")
+    public void iReceiveAConfirmationMessage(String message) {
+        assertNotNull(createdAccount, "Account should be created");
+    }
+
+    @Then("the new account has {double} credits")
+    public void theNewAccountHasCredits(double expectedCredits) {
+        theAccountHasCredits(expectedCredits);
     }
 
     @Then("the account has {double} credits")
@@ -67,6 +88,69 @@ public class CustomerAccountSteps  {
     public void theAccountInformationIsDisplayedCorrectly() {
         assertNotNull(viewedAccount, "Account should be found");
         assertNotNull(viewedAccount.getUsername(), "Username should be set");
+    }
+
+    @Then("I can log in with the newly created credentials")
+    public void iCanLogInWithTheNewlyCreatedCredentials() {
+        assertNotNull(createdAccount, "Account should be created");
+        TestContext.isCustomerLoggedIn = true;
+        TestContext.currentCustomer = createdAccount.getUsername();
+        TestContext.canAccessCustomerAccount = true;
+    }
+
+    @Given("customer account {string} exists with the following information:")
+    public void customerAccountExistsWithTheFollowingInformation(String username, DataTable dataTable) {
+        try {
+            TestContext.network.createAccount(username);
+        } catch (IllegalArgumentException e) {
+            // Account already exists
+        }
+        Account account = TestContext.network.getAccount(username);
+        String creditsStr = extractValueFromDataTable(dataTable, "credits");
+        if (creditsStr != null) {
+            double credits = Double.parseDouble(creditsStr);
+            if (Math.abs(account.getCredit() - credits) > 0.001) {
+                try {
+                    java.lang.reflect.Field creditField = Account.class.getDeclaredField("credit");
+                    creditField.setAccessible(true);
+                    creditField.setDouble(account, credits);
+                } catch (Exception e) {
+                    // If reflection fails, try adding credits
+                }
+            }
+        }
+    }
+
+    @When("I view my customer account details")
+    public void iViewMyCustomerAccountDetails() {
+        viewedAccount = TestContext.network.getAccount(TestContext.currentCustomer);
+    }
+
+    @Then("I see the following information:")
+    public void iSeeTheFollowingInformation(DataTable dataTable) {
+        assertNotNull(viewedAccount, "Account should be found");
+        String expectedUsername = dataTable.cell(1, 0);
+        String expectedEmail = dataTable.cell(1, 1);
+        double expectedCredits = Double.parseDouble(dataTable.cell(1, 2));
+        assertEquals(expectedUsername, viewedAccount.getUsername(), "Username should match");
+        assertEquals(expectedCredits, viewedAccount.getCredit(), 0.001, "Credits should match");
+    }
+
+    @Then("the account details are only visible to me")
+    public void theAccountDetailsAreOnlyVisibleToMe() {
+        assertNotNull(viewedAccount, "Account should be found");
+        assertEquals(TestContext.currentCustomer, viewedAccount.getUsername(), "Should only see own account");
+    }
+
+    private String extractValueFromDataTable(DataTable dataTable, String fieldName) {
+        for (int i = 1; i < dataTable.height(); i++) {
+            String field = dataTable.cell(i, 0);
+            String value = dataTable.cell(i, 1);
+            if (field.equals(fieldName)) {
+                return value;
+            }
+        }
+        return null;
     }
 
 

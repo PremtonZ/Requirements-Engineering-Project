@@ -7,15 +7,24 @@ public class Main {
         ECSManager network = new ECSManager();
         LocalDate now = LocalDate.now();
 
+        System.out.println("=== Electric Charging Station System Demo ===\n");
+
+        // === Manage Infrastructure ===
+        System.out.println("--- Manage Infrastructure ---");
         Site site1 = network.createSite("Deutschwagram");
         Site site2 = network.createSite("Wien");
         System.out.println("Sites: " + site1.getLocation() + ", " + site2.getLocation());
 
-        Charger charger1 = network.createCharger("AC_1", "Deutschwagram", "AC", "in operation free");
-        Charger charger2 = network.createCharger("DC_1", "Deutschwagram", "DC", "in operation free");
+        // Create Charging Station first
+        ChargingStation station1 = network.createChargingStation("Station_A", "Deutschwagram", "outdoor");
+        System.out.println("Charging Station: " + station1.getName() + " at " + station1.getSite().getLocation());
+
+        // Create Chargers at Charging Station
+        Charger charger1 = network.createCharger("AC_1", "Deutschwagram", "Station_A", "AC", "in operation free");
+        Charger charger2 = network.createCharger("DC_1", "Deutschwagram", "Station_A", "DC", "in operation free");
         System.out.println("Chargers: " + charger1.getName() + " (" + charger1.getMode() + "), " + charger2.getName() + " (" + charger2.getMode() + ")");
 
-        Charger ac1 = network.getCharger("Deutschwagram", "AC_1");
+        Charger ac1 = network.getCharger("Deutschwagram", "Station_A", "AC_1");
         ac1.setMode("AC");
         System.out.println("Charger type: " + ac1.getName() + " = " + ac1.getMode());
 
@@ -26,11 +35,13 @@ public class Main {
         Site selected = network.getSite("Deutschwagram");
         System.out.println("Selected: " + selected.getLocation() + " (" + network.getChargerCountAtSite("Deutschwagram") + " chargers)");
 
-        Charger ac = network.getCharger("Deutschwagram", "AC_1");
-        Charger dc = network.getCharger("Deutschwagram", "DC_1");
+        Charger ac = network.getCharger("Deutschwagram", "Station_A", "AC_1");
+        Charger dc = network.getCharger("Deutschwagram", "Station_A", "DC_1");
         System.out.println("Status: " + ac.getName() + " = " + ac.getMode() + ", " + ac.getState());
         System.out.println("Status: " + dc.getName() + " = " + dc.getMode() + ", " + dc.getState());
 
+        // === Manage Customer Account ===
+        System.out.println("\n--- Manage Customer Account ---");
         Account account1 = network.createAccount("Max");
         Account account2 = network.createAccount("Philipp");
         System.out.println("Accounts: " + account1.getUsername() + " (ID:" + account1.getCustomerId() + "), " + account2.getUsername() + " (ID:" + account2.getCustomerId() + ")");
@@ -56,15 +67,54 @@ public class Main {
         network.deleteAccount("TestUser");
         System.out.println("Deleted. Total accounts: " + network.getAccountCount());
 
-        // Admin Manage Credits
+        // === Admin Manage Credits ===
+        System.out.println("\n--- Admin Manage Credits ---");
         network.createAccount("CreditUser");
         network.addCredit("CreditUser", 150.0, now.getDayOfMonth(), now.getMonthValue(), now.getYear());
-        System.out.println("\nShow Balance: CreditUser = " + network.getAccount("CreditUser").getCredit() + " credits");
+        System.out.println("Show Balance: CreditUser = " + network.getAccount("CreditUser").getCredit() + " credits");
 
         network.addCredit("CreditUser", 50.0, now.getDayOfMonth(), now.getMonthValue(), now.getYear());
         System.out.println("Top-Up: +50.0 credits (150.0 -> " + network.getAccount("CreditUser").getCredit() + ")");
 
         System.out.println("Balance History: " + network.getAccount("CreditUser").getInvoiceItems().size() + " transactions");
         network.printInvoiceHistory("CreditUser");
+
+        // === Manage Infrastructure CRUD Operations ===
+        System.out.println("\n--- Manage Infrastructure CRUD ---");
+
+        // Update Location
+        System.out.println("\nUpdate Location: Deutschwagram -> Deutschwagram_New");
+        network.updateSiteLocation("Deutschwagram", "Deutschwagram_New");
+        System.out.println("Updated: " + network.getSite("Deutschwagram_New").getLocation());
+
+        // Update Charging Station
+        System.out.println("\nUpdate Charging Station: Station_A -> Station_A_Updated");
+        network.updateChargingStationName("Deutschwagram_New", "Station_A", "Station_A_Updated");
+        System.out.println("Updated: " + network.getChargingStation("Deutschwagram_New", "Station_A_Updated").getName());
+
+        // Update Charging Point
+        System.out.println("\nUpdate Charging Point: AC_1 -> AC_1_Updated");
+        network.updateChargerName("Deutschwagram_New", "Station_A_Updated", "AC_1", "AC_1_Updated");
+        System.out.println("Updated name: " + network.getCharger("Deutschwagram_New", "Station_A_Updated", "AC_1_Updated").getName());
+
+        network.updateChargerMode("Deutschwagram_New", "Station_A_Updated", "AC_1_Updated", "DC");
+        System.out.println("Updated mode: " + network.getCharger("Deutschwagram_New", "Station_A_Updated", "AC_1_Updated").getMode());
+
+        // Delete Charging Point
+        System.out.println("\nDelete Charging Point: DC_1");
+        network.deleteCharger("Deutschwagram_New", "Station_A_Updated", "DC_1");
+        System.out.println("Deleted. Remaining chargers: " + network.getChargingStation("Deutschwagram_New", "Station_A_Updated").getChargers().size());
+
+        // Delete Charging Station
+        System.out.println("\nDelete Charging Station: Station_A_Updated");
+        network.deleteChargingStation("Deutschwagram_New", "Station_A_Updated");
+        System.out.println("Deleted. Remaining stations: " + network.getSite("Deutschwagram_New").getChargingStations().size());
+
+        // Delete Location
+        System.out.println("\nDelete Location: Wien");
+        network.deleteSite("Wien");
+        System.out.println("Deleted. Total sites: " + network.getSiteCount());
+
+        System.out.println("\n=== Demo Complete ===");
     }
 }
