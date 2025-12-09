@@ -1,9 +1,8 @@
 Feature: Customer Inform Invoice Status
   As a Customer
-  I want to view and download my invoices
+  I want to view my invoices
   so that I can check the details and keep records
 
-  # MVP 2
   Scenario: Read Invoice
     Given I am logged in as a customer
       And an invoice with item number "42" exists for my account
@@ -21,21 +20,3 @@ Feature: Customer Inform Invoice Status
       | payment method            | wallet (credit balance)    |
     And all invoice information is displayed correctly
 
-  Scenario: Download Invoice
-    Given I am logged in as a customer
-      And an invoice with item number "42" exists for my account
-    When I select "Download" for invoice "42"
-    Then I receive a PDF file named "invoice-42.pdf"
-      And the PDF contains all required invoice details:
-        | field                     |
-        | invoice item number       |
-        | location name             |
-        | charging point            |
-        | charging mode             |
-        | start time                |
-        | duration of use           |
-        | loaded energy (kWh)       |
-        | price                     |
-        | taxes                     |
-        | payment method            |
-      And the PDF is generated successfully
