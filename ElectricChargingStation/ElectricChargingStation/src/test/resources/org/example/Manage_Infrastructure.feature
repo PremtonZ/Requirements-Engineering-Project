@@ -1,5 +1,5 @@
 Feature: Manage Infrastructure
-  As an Admin
+  As an Owner
   I want to manage infrastructure
   so that I can offer charging services
 

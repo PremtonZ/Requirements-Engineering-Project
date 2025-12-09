@@ -1,5 +1,5 @@
 Feature: Manage Prices
-  As an Admin,
+  As an Owner,
   I want to manage prices,
   so that I can set pricing for charging services
 

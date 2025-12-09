@@ -1,5 +1,5 @@
 Feature: Manage Charging Point Status
-  As an Admin,
+  As an Owner,
   I want to manage the charging point status,
   so that I can monitor and control charging points
 

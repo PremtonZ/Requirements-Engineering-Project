@@ -1,5 +1,5 @@
 Feature: Admin Manage Credits
-    As an Admin,
+    As an Owner,
     I want to manage customer credit,
     so that I can handle customer balance
 

@@ -1,5 +1,5 @@
 Feature: Admin Manage Customer Account
-  As an Admin,
+  As an Owner,
   I want to manage customer accounts,
   so that I can handle customer information
 

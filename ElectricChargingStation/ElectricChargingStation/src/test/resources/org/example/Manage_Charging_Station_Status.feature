@@ -4,7 +4,7 @@ Feature: Manage Charging Station Status
   so that I can check availability and find out-of-order devices
 
   Scenario: Read Charging Station
-    Given I am logged in as owner
+    Given I am logged in as admin
       And the following locations and charging stations exist:
         | location       | charging station |
         | Hauptplatz     | Station_1        |
@@ -18,7 +18,7 @@ Feature: Manage Charging Station Status
     And the charging station list is displayed correctly
 
   Scenario: Read Charging Point Status
-    Given I am logged in as owner
+    Given I am logged in as admin
       And a location "Hauptplatz" exists
       And a charging station "Station_1" exists at location "Hauptplatz"
       And the following charging points exist for "Station_1":
