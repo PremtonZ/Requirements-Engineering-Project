@@ -7,7 +7,6 @@ Feature: Inform Invoice Status
         Given I am logged in as customer
         And I am in the invoice tab
 
-    // MVP 2
     Scenario: Read Invoice
         When I click on an invoice in the invoice history
         Then I see the details of the invoice:

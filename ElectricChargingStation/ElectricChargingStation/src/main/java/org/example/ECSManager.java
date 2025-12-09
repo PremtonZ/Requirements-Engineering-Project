@@ -113,5 +113,23 @@ public class ECSManager {
     public List<Account> getAccounts() {
         return accounts;
     }
+
+    public void updateAccountUsername(String oldUsername, String newUsername) {
+        if(newUsername == null || newUsername.isBlank()) {
+            throw new IllegalArgumentException("New username cannot be null or blank");
+        }
+        Account account = getAccount(oldUsername);
+        for(Account acc : accounts) {
+            if(acc.getUsername().equals(newUsername) && !acc.equals(account)) {
+                throw new IllegalArgumentException("Username already exists");
+            }
+        }
+        account.setUsername(newUsername);
+    }
+
+    public void deleteAccount(String username) {
+        Account account = getAccount(username);
+        accounts.remove(account);
+    }
 }
 
