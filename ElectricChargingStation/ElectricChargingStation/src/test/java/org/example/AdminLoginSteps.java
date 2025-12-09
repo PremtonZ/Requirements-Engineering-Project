@@ -164,4 +164,3 @@ public class AdminLoginSteps {
         TestContext.network.setSitePrices(location, acKwh, acPpm, dcKwh, dcPpm);
     }
 }
-
