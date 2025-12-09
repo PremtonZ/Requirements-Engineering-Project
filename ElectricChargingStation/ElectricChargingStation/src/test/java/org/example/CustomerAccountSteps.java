@@ -68,5 +68,63 @@ public class CustomerAccountSteps  {
         assertNotNull(viewedAccount, "Account should be found");
         assertNotNull(viewedAccount.getUsername(), "Username should be set");
     }
+
+
+
+    // Update Customer Account
+    private Account updatedAccount;
+
+    @When("I update the customer account username from {string} to {string}")
+    public void iUpdateTheCustomerAccountUsernameFromTo(String oldUsername, String newUsername) {
+        try {
+            TestContext.network.updateAccountUsername(oldUsername, newUsername);
+            updatedAccount = TestContext.network.getAccount(newUsername);
+        } catch (IllegalArgumentException e) {
+            updatedAccount = null;
+            throw e;
+        }
+    }
+
+    @Then("the customer account username is updated to {string}")
+    public void theCustomerAccountUsernameIsUpdatedTo(String expectedUsername) {
+        assertNotNull(updatedAccount, "Account should exist after update");
+        assertEquals(expectedUsername, updatedAccount.getUsername(), "Username should be updated");
+    }
+
+    @Then("the account is available in the system with the new username")
+    public void theAccountIsAvailableInTheSystemWithTheNewUsername() {
+        assertNotNull(updatedAccount, "Account should exist");
+        Account foundAccount = TestContext.network.getAccount(updatedAccount.getUsername());
+        assertNotNull(foundAccount, "Account should be available in system with new username");
+        assertEquals(updatedAccount.getUsername(), foundAccount.getUsername(), "Username should match");
+    }
+
+    // Delete Customer Account
+    private Account deletedAccount;
+    private String deletedUsername;
+
+    @When("I delete the customer account with username {string}")
+    public void iDeleteTheCustomerAccountWithUsername(String username) {
+        deletedAccount = TestContext.network.getAccount(username);
+        deletedUsername = username;
+        TestContext.network.deleteAccount(username);
+    }
+
+    @Then("the customer account with username {string} is deleted successfully")
+    public void theCustomerAccountWithUsernameIsDeletedSuccessfully(String username) {
+        assertNotNull(deletedAccount, "Account should have existed before deletion");
+        assertEquals(username, deletedUsername, "Username should match");
+    }
+
+    @Then("the account is no longer available in the system")
+    public void theAccountIsNoLongerAvailableInTheSystem() {
+        assertNotNull(deletedAccount, "Account should have existed before deletion");
+        try {
+            TestContext.network.getAccount(deletedUsername);
+            fail("Account should not be available in system after deletion");
+        } catch (IllegalArgumentException e) {
+            assertTrue(e.getMessage().contains("Account not found"), "Should throw Account not found exception");
+        }
+    }
 }
 

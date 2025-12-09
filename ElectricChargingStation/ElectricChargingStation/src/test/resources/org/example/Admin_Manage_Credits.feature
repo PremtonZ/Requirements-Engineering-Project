@@ -3,7 +3,6 @@ Feature: Admin Manage Credits
     I want to manage customer credit,
     so that I can handle customer balance
 
-    // MVP 2
     Scenario: Show Customer Balance
         Given I am logged in as admin
         And a customer account with username "Max" exists

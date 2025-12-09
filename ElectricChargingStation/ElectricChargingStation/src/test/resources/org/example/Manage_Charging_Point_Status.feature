@@ -25,7 +25,6 @@ Feature: Manage Charging Point Status
     And I see charging point "AC_1" with mode "AC" and state "in operation free"
     And I see charging point "DC_1" with mode "DC" and state "in operation free"
 
-  // MVP 2
   Scenario: Read Charging Point
   
   Scenario: Update Charging Point Status

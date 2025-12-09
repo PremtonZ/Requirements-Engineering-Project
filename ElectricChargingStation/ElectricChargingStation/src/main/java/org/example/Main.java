@@ -42,5 +42,15 @@ public class Main {
         Site location = network.getSite("Deutschwagram");
         System.out.println("Location " + location.getLocation() + ": AC " + location.getACKwh() + "/kWh, " + location.getACPpm() + "/min");
         System.out.println("Location " + location.getLocation() + ": DC " + location.getDCKwh() + "/kWh, " + location.getDCPpm() + "/min");
+
+        System.out.println("\nUpdate Account: Max -> MaxMustermann");
+        network.updateAccountUsername("Max", "MaxMustermann");
+        System.out.println("Updated: " + network.getAccount("MaxMustermann").getUsername());
+
+        System.out.println("\nDelete Account: TestUser");
+        network.createAccount("TestUser");
+        System.out.println("Total accounts: " + network.getAccountCount());
+        network.deleteAccount("TestUser");
+        System.out.println("Deleted. Total accounts: " + network.getAccountCount());
     }
 }
