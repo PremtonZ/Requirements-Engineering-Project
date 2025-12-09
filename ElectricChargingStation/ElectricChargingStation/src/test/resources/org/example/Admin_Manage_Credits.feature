@@ -20,7 +20,7 @@ Feature: Admin Manage Credits
         And the account now has 150.0 credits
         And the credit top-up is successful
 
-    Scenario: Show Customer Balance History
+  Scenario: Show Customer Balance History
         Given I am logged in as admin
         And a customer account with username "Max" exists
         And customer account "Max" has 100.0 credits
@@ -29,9 +29,10 @@ Feature: Admin Manage Credits
         And an invoice with item number 42 is created for customer "Max"
         And I view the credit balance history for customer account "Max"
         Then I see the following balance history:
-            | Date       | Transaction Type | Credits | Source       | Reference      |
-            | 2025-01-10 | topup            | 100.0   | bank transfer| —              |
-            | 2025-01-12 | withdrawal       | -40.0   | —            | invoice #42    |
-            | 2025-01-15 | topup            | 50.0    | credit card  | —              |
-            | 2025-01-20 | topup            | 25.0    | voucher      | —              |
+          | Date       | Transaction Type | Credits | Source       | Reference      |
+          | 2025-01-10 | topup            | 100.0   | bank transfer| —              |
+          | 2025-01-12 | withdrawal       | -40.0   | —            | invoice #42    |
+          | 2025-01-15 | topup            | 50.0    | credit card  | —              |
+          | 2025-01-20 | topup            | 25.0    | voucher      | —              |
         And the balance history is displayed correctly
+
