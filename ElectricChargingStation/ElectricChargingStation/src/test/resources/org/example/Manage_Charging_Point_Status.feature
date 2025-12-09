@@ -18,16 +18,16 @@ Feature: Manage Charging Point Status
     And a location with name "Deutschwagram" exists
     And the following charging points exist:
       | Name | Location | Mode | State |
-      | AC_1 | Deutschwagram | AC | in operation free |
-      | DC_1 | Deutschwagram | DC | in operation free |
+      | AC_1 | Deutschwagram | AC | available |
+      | DC_1 | Deutschwagram | DC | available |
     When I display the charging point status for location "Deutschwagram"
     Then I see 2 charging points at location "Deutschwagram"
-    And I see charging point "AC_1" with mode "AC" and state "in operation free"
-    And I see charging point "DC_1" with mode "DC" and state "in operation free"
+    And I see charging point "AC_1" with mode "AC" and state "available"
+    And I see charging point "DC_1" with mode "DC" and state "available"
 
   Scenario: Read Charging Point
     Given I am logged in as admin
-      And a charging point "AC_1" exists at location "Deutschwagram" with mode "AC" and state "available"
+    And a charging point "AC_1" exists at location "Deutschwagram" with mode "AC" and state "available"
     When I view the charging point details for "AC_1" at location "Deutschwagram"
     Then I see the following details:
       | field    | value        |
@@ -42,9 +42,9 @@ Feature: Manage Charging Point Status
 
   Scenario: Update Charging Point Status
     Given I am logged in as admin
-      And a charging point "AC_1" exists at location "Deutschwagram" with state "available"
+    And a charging point "AC_1" exists at location "Deutschwagram" with state "available"
     When I update the charging point status for "AC_1" at location "Deutschwagram" to "out of order"
-      And I save the changes
+    And I save the changes
     Then the charging point "AC_1" has status "out of order"
-      And the updated status is stored in the system
-      And when I view charging point "AC_1" again I see state "out of order"
+    And the updated status is stored in the system
+    And when I view charging point "AC_1" again I see state "out of order"

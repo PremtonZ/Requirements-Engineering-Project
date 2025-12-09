@@ -65,11 +65,11 @@ public class Charger {
 
     public void setState(String state) {
         if(state != null) {
-            if(state.equals("in operation free") || state.equals("occupied") || state.equals("out of order")) {
+            if(state.equals("available") || state.equals("occupied") || state.equals("out of order")) {
                 this.state = state;
             } else {
                 throw new IllegalArgumentException("The State \"" + state +"\" is not a valid State\n" +
-                        "Valid States are \"in operation free\", \"occupied\" and \"out of order\"");
+                        "Valid States are \"available\", \"occupied\" and \"out of order\"");
             }
         }
     }
