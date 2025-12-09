@@ -440,7 +440,6 @@ public class ManageInfrastructureSteps {
     }
 
     private void ensureChargingPointExists(String name, String location, String mode, String state) {
-        // No conversion needed - use state directly
         String actualState = state;
         ensureChargingStationExists("DefaultStation", location);
         Charger charger = getChargerIfExists(location, name);

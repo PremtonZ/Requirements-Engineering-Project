@@ -126,11 +126,9 @@ public class AdminLoginSteps {
         try {
             TestContext.network.getAccount(username);
         } catch (IllegalArgumentException e) {
-            // Account doesn't exist, create it
             try {
                 TestContext.network.createAccount(username);
             } catch (IllegalArgumentException e2) {
-                // Account might have been created by another thread
             }
         }
         TestContext.isCustomerLoggedIn = true;
