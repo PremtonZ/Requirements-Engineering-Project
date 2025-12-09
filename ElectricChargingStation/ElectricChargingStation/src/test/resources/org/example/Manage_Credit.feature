@@ -20,7 +20,7 @@ Feature: Manage Credit
     Then I see that my account has 150.0 credits
     And the credit balance is displayed correctly
 
-  // MVP 2
+  # MVP 2
   Scenario: Read Balance History
     When I top up 50.0 credits to my account on date 2025-01-15 using "credit card"
     And I top up 25.0 credits to my account on date 2025-01-20 using "voucher"
