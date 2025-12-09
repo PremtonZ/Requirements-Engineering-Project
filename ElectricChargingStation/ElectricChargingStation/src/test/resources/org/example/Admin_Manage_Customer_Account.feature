@@ -7,18 +7,18 @@ Feature: Admin Manage Customer Account
     Given I am logged in as admin
     When I create a customer account with username "Max"
     Then a customer account with username "Max" is created successfully
-    And the account has 0.0 credits
-    And the account is available in the system
+      And the account has 0.0 credits
+      And the account is available in the system
 
   Scenario: Read Customer Account
     Given I am logged in as admin
-    And a customer account with username "Max" exists
-    And customer account "Max" has 200.0 credits
+      And a customer account with username "Max" exists
+      And customer account "Max" has 200.0 credits
     When I view the customer account with username "Max"
     Then I receive the following account information:
       | Username | Credits |
       | Max      | 200.0   |
-    And the account information is displayed correctly
+      And the account information is displayed correctly
 
   Scenario: Update Customer Account
     Given I am logged in as admin
