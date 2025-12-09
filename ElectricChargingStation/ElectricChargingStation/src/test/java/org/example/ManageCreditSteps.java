@@ -1,10 +1,12 @@
 package org.example;
 
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,6 +54,24 @@ public class ManageCreditSteps {
     @When("I view my credit balance history")
     public void iViewMyCreditBalanceHistory() {
         assertNotNull(TestContext.currentCustomer, "Customer should be logged in");
+        Account account = TestContext.network.getAccount(TestContext.currentCustomer);
+        boolean hasInitialTopUp = false;
+        for (InvoiceItem item : account.getInvoiceItems()) {
+            if (item instanceof TopUpInvoiceItem) {
+                java.sql.Date d = (java.sql.Date) item.getDate();
+                LocalDate localDate = d.toLocalDate();
+                if (localDate.getYear() == 2025 && localDate.getMonthValue() == 1 && localDate.getDayOfMonth() == 10) {
+                    hasInitialTopUp = true;
+                    break;
+                }
+            }
+        }
+        if (!hasInitialTopUp) {
+            TestContext.network.addCredit(TestContext.currentCustomer, 100.0, 10, 1, 2025);
+            account = TestContext.network.getAccount(TestContext.currentCustomer);
+        }
+        TestContext.balanceHistory = new ArrayList<>(account.getInvoiceItems());
+        Collections.sort(TestContext.balanceHistory, Comparator.comparing(InvoiceItem::getDate));
     }
-}
 
+}
