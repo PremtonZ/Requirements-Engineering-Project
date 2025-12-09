@@ -9,7 +9,7 @@ Feature: Charge Car
         And a charging point with name "AC_1" exists at charging station "Stephansplatz"
         And the charging point with name "AC_1" has the status "in Betrieb frei"
 
-    // MVP 2
+    # MVP 2
     Scenario: Choose Charging Point
         When I go to the charging station with the name "Stephansplatz"
         Then I see all the charging points
