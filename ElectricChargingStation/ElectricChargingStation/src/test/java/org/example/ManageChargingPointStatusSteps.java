@@ -1,7 +1,11 @@
 package org.example;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -83,6 +87,60 @@ public class ManageChargingPointStatusSteps  {
         assertEquals(expectedMode, foundCharger.getMode(), "Charging point mode should match");
         assertEquals(expectedState, foundCharger.getState(), "Charging point state should match");
     }
+
+    @When("I view the charging point details for {string} at location {string}")
+    public void iViewTheChargingPointDetailsForAtLocation(String chargerName, String locationName) {
+        Site site = TestContext.network.getSite(locationName);
+        Charger foundCharger = null;
+        for (ChargingStation station : site.getChargingStations()) {
+            for (Charger charger : station.getChargers()) {
+                if (charger.getName().equals(chargerName)) {
+                    foundCharger = charger;
+                    break;
+                }
+            }
+            if (foundCharger != null) break;
+        }
+        assertNotNull(foundCharger, "Charging point should exist: " + chargerName);
+        TestContext.selectedCharger = foundCharger;
+    }
+
+    @Then("I see the following details:")
+    public void iSeeTheFollowingDetails(io.cucumber.datatable.DataTable dataTable) {
+        assertNotNull(TestContext.selectedCharger, "Charging point should be selected");
+        Charger charger = TestContext.selectedCharger;
+
+        for (int i = 1; i < dataTable.height(); i++) {
+            String field = dataTable.cell(i, 0);
+            String expectedValue = dataTable.cell(i, 1);
+
+            String actualValue = null;
+            if (field.equals("name")) {
+                actualValue = charger.getName();
+            } else if (field.equals("location")) {
+                actualValue = charger.getSite().getLocation();
+            } else if (field.equals("mode")) {
+                actualValue = charger.getMode();
+            } else if (field.equals("state")) {
+                actualValue = charger.getState();
+            }
+
+            assertEquals(expectedValue, actualValue, "Field " + field + " should match");
+        }
+    }
+
+    @Then("the charging point status is shown as one of:")
+    public void theChargingPointStatusIsShownAsOneOf(io.cucumber.datatable.DataTable dataTable) {
+        assertNotNull(TestContext.selectedCharger, "Charging point should be selected");
+        Charger charger = TestContext.selectedCharger;
+        String displayState = charger.getState();
+
+        List<String> validStates = new ArrayList<>();
+        for (int i = 1; i < dataTable.height(); i++) {
+            validStates.add(dataTable.cell(i, 0));
+        }
+
+        assertTrue(validStates.contains(displayState),
+                "Charging point state should be one of: " + validStates + " but was " + displayState);
+    }
 }
-
-

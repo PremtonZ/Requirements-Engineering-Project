@@ -150,6 +150,33 @@ public class ECSManager {
         return sites.size();
     }
 
+    public List<ChargingStation> getChargingStationsAtLocation(String siteLocation) {
+        Site site = getSite(siteLocation);
+        return new ArrayList<>(site.getChargingStations());
+    }
+
+    public List<Charger> getChargersAtStation(String siteLocation, String chargingStationName) {
+        ChargingStation station = getChargingStation(siteLocation, chargingStationName);
+        return new ArrayList<>(station.getChargers());
+    }
+
+    public void printChargingStationsAtLocation(String siteLocation) {
+        Site site = getSite(siteLocation);
+        System.out.println("Location: " + site.getLocation());
+        for (ChargingStation station : site.getChargingStations()) {
+            System.out.println("  - " + station.getName());
+        }
+    }
+
+    public void printChargingPointStatusAtStation(String siteLocation, String chargingStationName) {
+        ChargingStation station = getChargingStation(siteLocation, chargingStationName);
+        System.out.println("Station: " + station.getName() + " at " + station.getSite().getLocation());
+        for (Charger charger : station.getChargers()) {
+            String statusLabel = charger.getState();
+            System.out.println("  - " + charger.getName() + ": " + statusLabel);
+        }
+    }
+
     public int getAccountCount() {
         return accounts.size();
     }
@@ -299,4 +326,3 @@ public class ECSManager {
         deleteCharger(siteLocation, charger.getChargingStation().getName(), chargerName);
     }
 }
-

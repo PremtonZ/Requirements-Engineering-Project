@@ -92,7 +92,7 @@ public class AdminManageCreditsSteps {
             }
         }
         if (!chargerExists) {
-            TestContext.network.createCharger("AC_1", "Deutschwagram", "AC", "in operation free");
+            TestContext.network.createCharger("AC_1", "Deutschwagram", "AC", "available");
         }
         Charger charger = TestContext.network.getCharger("Deutschwagram", "AC_1");
         if (account.getCredit() >= 40.0) {
