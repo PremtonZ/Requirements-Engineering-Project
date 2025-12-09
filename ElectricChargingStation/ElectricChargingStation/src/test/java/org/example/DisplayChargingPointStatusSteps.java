@@ -6,8 +6,9 @@ import io.cucumber.java.en.When;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DisplayChargingPointStatusSteps  {
+public class DisplayChargingPointStatusSteps {
 
+    // Show Location
     @When("I view the location {string}")
     public void iViewTheLocation(String locationName) {
         try {
@@ -26,13 +27,15 @@ public class DisplayChargingPointStatusSteps  {
         double expectedDCKwh = Double.parseDouble(dataTable.cell(1, 3));
         double expectedDCPpm = Double.parseDouble(dataTable.cell(1, 4));
         int expectedChargingPoints = Integer.parseInt(dataTable.cell(1, 5));
-        
+
         assertEquals(expectedLocation, TestContext.selectedLocation.getLocation(), "Location name should match");
         assertEquals(expectedACKwh, TestContext.selectedLocation.getACKwh(), 0.001, "AC kWh price should match");
         assertEquals(expectedACPpm, TestContext.selectedLocation.getACPpm(), 0.001, "AC per minute price should match");
         assertEquals(expectedDCKwh, TestContext.selectedLocation.getDCKwh(), 0.001, "DC kWh price should match");
         assertEquals(expectedDCPpm, TestContext.selectedLocation.getDCPpm(), 0.001, "DC per minute price should match");
-        assertEquals(expectedChargingPoints, TestContext.network.getChargerCountAtSite(TestContext.selectedLocation.getLocation()), "Charging point count should match");
+        assertEquals(expectedChargingPoints,
+                TestContext.network.getChargerCountAtSite(TestContext.selectedLocation.getLocation()),
+                "Charging point count should match");
     }
 
     @Then("the location information is displayed correctly")
@@ -41,6 +44,7 @@ public class DisplayChargingPointStatusSteps  {
         assertNotNull(TestContext.selectedLocation.getLocation(), "Location name should be set");
     }
 
+    // Read Charging Point Price
     @When("I view the AC charging point price at location {string}")
     public void iViewTheACChargingPointPriceAtLocation(String location) {
         TestContext.selectedLocation = TestContext.network.getSite(location);
@@ -84,4 +88,3 @@ public class DisplayChargingPointStatusSteps  {
         assertTrue(TestContext.selectedLocation.getDCPpm() > 0, "DC per minute price should be set");
     }
 }
-

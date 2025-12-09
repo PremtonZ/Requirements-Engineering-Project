@@ -1,1 +1,0 @@
-Feature: Customer Manage Credit

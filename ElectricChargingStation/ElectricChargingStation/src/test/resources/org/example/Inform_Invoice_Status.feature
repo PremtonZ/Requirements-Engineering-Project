@@ -7,8 +7,8 @@ Feature: Inform Invoice Status
         Given I am logged in as customer
         And I am in the invoice tab
 
-
-    Scenario: Rechnungsdetails anzeigen
+    // MVP 2
+    Scenario: Read Invoice
         When I click on an invoice in the invoice history
         Then I see the details of the invoice:
             | invoice item number        | 42                                |
@@ -23,8 +23,7 @@ Feature: Inform Invoice Status
             | money top-ups              | 50 EUR                            |
             | outstanding balance status | 44.17 EUR remaining               |
 
-
-    Scenario: Rechnungen herunterladen
+    Scenario: Download Invoice
         When I click on an invoice in the invoice history
         Then the app shows me the download button in the top right corner
         And I click on the download button
