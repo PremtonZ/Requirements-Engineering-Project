@@ -55,10 +55,7 @@ public class AdminManageCreditsSteps {
     @Then("the credit top-up is successful")
     public void theCreditTopUpIsSuccessful() {
         Account account = viewedAccount != null ? viewedAccount : TestContext.network.getAccount(TestContext.currentCustomer);
-        // If initialBalance was not set (from ManageCreditSteps), we can't compare, so just check that credit > 0
         if (initialBalance == 0.0 && viewedAccount == null) {
-            // This was called from ManageCreditSteps, so we need to get the initial balance from the account
-            // We can't reliably get it, so just check that credit is positive
             assertTrue(account.getCredit() >= 0, "Credit should be non-negative");
         } else {
             assertTrue(account.getCredit() > initialBalance, "Credit should have increased");
@@ -92,7 +89,7 @@ public class AdminManageCreditsSteps {
             }
         }
         if (!chargerExists) {
-            TestContext.network.createCharger("AC_1", "Deutschwagram", "AC", "in operation free");
+            TestContext.network.createCharger("AC_1", "Deutschwagram", "AC", "available");
         }
         Charger charger = TestContext.network.getCharger("Deutschwagram", "AC_1");
         if (account.getCredit() >= 40.0) {

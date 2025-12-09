@@ -1,5 +1,5 @@
 Feature: Admin Login
-  As an Admin,
+  As an Owner,
   I want to login and logout,
   so that I can access the system securely
 

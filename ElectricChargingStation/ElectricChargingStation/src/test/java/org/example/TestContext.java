@@ -10,5 +10,6 @@ public class TestContext {
     public static String currentCustomer = null;
     public static boolean canAccessCustomerAccount = false;
     public static Site selectedLocation;
+    public static Charger selectedCharger;
 }
 

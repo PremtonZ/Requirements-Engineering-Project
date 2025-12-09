@@ -20,8 +20,8 @@ public class Main {
         System.out.println("Charging Station: " + station1.getName() + " at " + station1.getSite().getLocation());
 
         // Create Chargers at Charging Station
-        Charger charger1 = network.createCharger("AC_1", "Deutschwagram", "Station_A", "AC", "in operation free");
-        Charger charger2 = network.createCharger("DC_1", "Deutschwagram", "Station_A", "DC", "in operation free");
+        Charger charger1 = network.createCharger("AC_1", "Deutschwagram", "Station_A", "AC", "available");
+        Charger charger2 = network.createCharger("DC_1", "Deutschwagram", "Station_A", "DC", "available");
         System.out.println("Chargers: " + charger1.getName() + " (" + charger1.getMode() + "), " + charger2.getName() + " (" + charger2.getMode() + ")");
 
         Charger ac1 = network.getCharger("Deutschwagram", "Station_A", "AC_1");
@@ -114,6 +114,27 @@ public class Main {
         System.out.println("\nDelete Location: Wien");
         network.deleteSite("Wien");
         System.out.println("Deleted. Total sites: " + network.getSiteCount());
+
+        // === Manage Charging Station Status ===
+        System.out.println("\n--- Manage Charging Station Status ---");
+
+        // Setup: Create locations and charging stations
+        network.createSite("Hauptplatz");
+        network.createSite("Stephansplatz");
+        network.createChargingStation("Station_1", "Hauptplatz", "outdoor");
+        network.createChargingStation("Station_2", "Hauptplatz", "indoor");
+        network.createChargingStation("Station_A", "Stephansplatz", "outdoor");
+
+        // Read Charging Station: Show list of stations at a location
+        System.out.println("\nRead Charging Station at Hauptplatz:");
+        network.printChargingStationsAtLocation("Hauptplatz");
+
+        // Read Charging Point Status: Show status of points at a station
+        System.out.println("\nRead Charging Point Status at Station_1:");
+        network.createCharger("AC_1", "Hauptplatz", "Station_1", "AC", "available");
+        network.createCharger("AC_2", "Hauptplatz", "Station_1", "AC", "occupied");
+        network.createCharger("DC_1", "Hauptplatz", "Station_1", "DC", "out of order");
+        network.printChargingPointStatusAtStation("Hauptplatz", "Station_1");
 
         System.out.println("\n=== Demo Complete ===");
     }

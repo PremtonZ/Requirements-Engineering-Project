@@ -35,7 +35,7 @@ public class ManageInfrastructureSteps {
     @When("I add a charging point with name {string} to location {string}")
     public void iAddAChargingPointWithNameToLocation(String chargerName, String locationName) {
         ensureChargingStationExists("DefaultStation", locationName);
-        createdCharger = getOrCreateCharger(chargerName, locationName, "DefaultStation", "AC", "in operation free");
+        createdCharger = getOrCreateCharger(chargerName, locationName, "DefaultStation", "AC", "available");
     }
 
     @Then("a charging point with name {string} is created successfully at location {string}")
@@ -137,7 +137,7 @@ public class ManageInfrastructureSteps {
     public void theLocationHasAssociatedChargingStationsAndChargingPoints() {
         try {
             TestContext.network.createChargingStation("TestStation", "Deutschwagram", "outdoor");
-            TestContext.network.createCharger("TestCharger", "Deutschwagram", "TestStation", "AC", "in operation free");
+            TestContext.network.createCharger("TestCharger", "Deutschwagram", "TestStation", "AC", "available");
         } catch (IllegalArgumentException e) {
         }
     }
@@ -258,7 +258,7 @@ public class ManageInfrastructureSteps {
     // Delete Charging Station
     @Given("{string} has assigned charging points")
     public void hasAssignedChargingPoints(String stationName) {
-        ensureChargingPointExists("TestCP", "Deutschwagram", "AC", "in operation free");
+        ensureChargingPointExists("TestCP", "Deutschwagram", "AC", "available");
     }
 
     @When("I delete charging station {string}")
@@ -285,7 +285,7 @@ public class ManageInfrastructureSteps {
         getOrCreateSite(locationName);
         getOrCreateChargingStation(stationName, locationName, "outdoor");
         String mode = extractValueFromDataTable(dataTable, "mode", "AC");
-        getOrCreateCharger(chargerName, locationName, stationName, mode, "in operation free");
+        getOrCreateCharger(chargerName, locationName, stationName, mode, "available");
     }
 
     @When("I view the charging point {string} at charging station {string}")
@@ -308,7 +308,7 @@ public class ManageInfrastructureSteps {
     public void aChargingPointExistsAtChargingStation(String chargerName, String stationName) {
         getOrCreateSite("Deutschwagram");
         getOrCreateChargingStation(stationName, "Deutschwagram", "outdoor");
-        getOrCreateCharger(chargerName, "Deutschwagram", stationName, "AC", "in operation free");
+        getOrCreateCharger(chargerName, "Deutschwagram", stationName, "AC", "available");
     }
 
     @When("I update charging point {string} with:")
@@ -374,16 +374,27 @@ public class ManageInfrastructureSteps {
         assertThrows(IllegalArgumentException.class, () -> TestContext.network.getCharger("Deutschwagram", chargerName));
     }
 
+    // Setup methods for other feature files
     @Given("a charging point with name {string} exists at location {string}")
     public void aChargingPointWithNameExistsAtLocation(String chargerName, String locationName) {
-        ensureChargingPointExists(chargerName, locationName, "AC", "in operation free");
+        ensureChargingPointExists(chargerName, locationName, "AC", "available");
     }
 
     @Given("a charging point with name {string} exists at charging station {string}")
     public void aChargingPointWithNameExistsAtChargingStation(String chargerName, String stationName) {
         getOrCreateSite("Deutschwagram");
         getOrCreateChargingStation(stationName, "Deutschwagram", "outdoor");
-        getOrCreateCharger(chargerName, "Deutschwagram", stationName, "AC", "in operation free");
+        getOrCreateCharger(chargerName, "Deutschwagram", stationName, "AC", "available");
+    }
+
+    @Given("a charging point {string} exists at location {string} with mode {string} and state {string}")
+    public void aChargingPointExistsAtLocationWithModeAndState(String chargerName, String locationName, String mode, String state) {
+        ensureChargingPointExists(chargerName, locationName, mode, state);
+    }
+
+    @Given("a charging point {string} exists at location {string} with state {string}")
+    public void aChargingPointExistsAtLocationWithState(String chargerName, String locationName, String state) {
+        ensureChargingPointExists(chargerName, locationName, "AC", state);
     }
 
     @Given("the following charging points exist:")
@@ -429,13 +440,14 @@ public class ManageInfrastructureSteps {
     }
 
     private void ensureChargingPointExists(String name, String location, String mode, String state) {
+        String actualState = state;
         ensureChargingStationExists("DefaultStation", location);
         Charger charger = getChargerIfExists(location, name);
         if (charger != null) {
             charger.setMode(mode);
-            charger.setState(state);
+            charger.setState(actualState);
         } else {
-            createChargerSafely(name, location, mode, state);
+            createChargerSafely(name, location, mode, actualState);
         }
     }
 

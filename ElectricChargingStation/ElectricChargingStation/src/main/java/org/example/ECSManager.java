@@ -123,7 +123,6 @@ public class ECSManager {
         throw new IllegalArgumentException("Charger not found: " + chargerName + " at charging station " + chargingStationName + " at " + siteLocation);
     }
 
-    // Legacy method for backward compatibility
     public Charger getCharger(String siteLocation, String chargerName) {
         Site site = getSite(siteLocation);
         for(ChargingStation cs : site.getChargingStations()) {
@@ -148,6 +147,33 @@ public class ECSManager {
 
     public int getSiteCount() {
         return sites.size();
+    }
+
+    public List<ChargingStation> getChargingStationsAtLocation(String siteLocation) {
+        Site site = getSite(siteLocation);
+        return new ArrayList<>(site.getChargingStations());
+    }
+
+    public List<Charger> getChargersAtStation(String siteLocation, String chargingStationName) {
+        ChargingStation station = getChargingStation(siteLocation, chargingStationName);
+        return new ArrayList<>(station.getChargers());
+    }
+
+    public void printChargingStationsAtLocation(String siteLocation) {
+        Site site = getSite(siteLocation);
+        System.out.println("Location: " + site.getLocation());
+        for (ChargingStation station : site.getChargingStations()) {
+            System.out.println("  - " + station.getName());
+        }
+    }
+
+    public void printChargingPointStatusAtStation(String siteLocation, String chargingStationName) {
+        ChargingStation station = getChargingStation(siteLocation, chargingStationName);
+        System.out.println("Station: " + station.getName() + " at " + station.getSite().getLocation());
+        for (Charger charger : station.getChargers()) {
+            String statusLabel = charger.getState();
+            System.out.println("  - " + charger.getName() + ": " + statusLabel);
+        }
     }
 
     public int getAccountCount() {
@@ -189,7 +215,6 @@ public class ECSManager {
             return;
         }
 
-        // Sort by date (oldest first)
         Collections.sort(invoiceItems, Comparator.comparing(InvoiceItem::getDate));
 
         System.out.println("Invoice History for " + username + ":");
@@ -216,10 +241,8 @@ public class ECSManager {
     // Delete Location
     public void deleteSite(String location) {
         Site site = getSite(location);
-        // Remove all charging stations first (which will remove their chargers)
         List<ChargingStation> stationsToRemove = new ArrayList<>(site.getChargingStations());
         for(ChargingStation cs : stationsToRemove) {
-            // Remove all chargers from the station first
             List<Charger> chargersToRemove = new ArrayList<>(cs.getChargers());
             for(Charger charger : chargersToRemove) {
                 cs.removeCharger(charger);
@@ -283,7 +306,6 @@ public class ECSManager {
         chargingStation.removeCharger(charger);
     }
 
-    // Legacy methods for backward compatibility
     public void updateChargerName(String siteLocation, String oldName, String newName) {
         Charger charger = getCharger(siteLocation, oldName);
         updateChargerName(siteLocation, charger.getChargingStation().getName(), oldName, newName);
@@ -299,4 +321,3 @@ public class ECSManager {
         deleteCharger(siteLocation, charger.getChargingStation().getName(), chargerName);
     }
 }
-

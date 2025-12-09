@@ -115,7 +115,6 @@ public class CustomerAccountSteps  {
                     creditField.setAccessible(true);
                     creditField.setDouble(account, credits);
                 } catch (Exception e) {
-                    // If reflection fails, try adding credits
                 }
             }
         }

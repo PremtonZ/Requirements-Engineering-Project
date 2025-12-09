@@ -76,7 +76,7 @@ public class ChargingInvoiceItem extends InvoiceItem {
 
     public void checkForChargerState(Charger charger) {
         switch(charger.getState()){
-            case "in operation free": return;
+            case "available": return;
             case "occupied": throw new IllegalStateException("Charger is already occupied");
             case "out of order": throw new IllegalStateException("Charger is out of order");
         }
