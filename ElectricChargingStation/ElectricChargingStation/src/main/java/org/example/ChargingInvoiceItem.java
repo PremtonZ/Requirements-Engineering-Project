@@ -1,6 +1,7 @@
 package org.example;
 
-import java.util.Calendar;
+import java.sql.Date;
+import java.time.LocalDate;
 
 public class ChargingInvoiceItem extends InvoiceItem {
     final double priceKwh;
@@ -14,9 +15,8 @@ public class ChargingInvoiceItem extends InvoiceItem {
 
         this.invoiceId = invoiceId;
         this.account = account;
-        Calendar cal = Calendar.getInstance();
-        cal.set(year, month - 1, day);
-        this.date = cal.getTime();
+        LocalDate localDate = LocalDate.of(year, month, day);
+        this.date = Date.valueOf(localDate);
 
         checkForChargerState(charger);
         this.charger = charger;
@@ -61,7 +61,7 @@ public class ChargingInvoiceItem extends InvoiceItem {
     public int getAmountKWh() {
         return amountKWh;
     }
-    
+
     public void setAmountKWh(int amountKWh) {
         if(amountKWh > 0) {
             this.amountKWh = amountKWh;
@@ -84,8 +84,9 @@ public class ChargingInvoiceItem extends InvoiceItem {
 
     @Override
     public String toString() {
+        java.util.Date date = getDate();
         String line = String.format("| %3d | %02d.%02d.%04d | %-18s | %-8s |  %2s  | %12.2f€ | %15.2f€ | %3d | %7d | %6.2f€ |\n",
-                getInvoiceId(), getDate().getDate(), getDate().getMonth(), getDate().getYear(),
+                getInvoiceId(), date.getDate(), date.getMonth() + 1, date.getYear() + 1900,
                 charger.getSite().getLocation(), charger.getName(), charger.getMode(), priceKwh, ppm, amountKWh, duration, calculateTotal());
         return line.replace(",", ".");
     }

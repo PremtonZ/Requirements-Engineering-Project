@@ -1,6 +1,8 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ECSManager {
@@ -66,9 +68,9 @@ public class ECSManager {
         site.setAllPrices(acKwh, acPpm, dcKwh, dcPpm);
     }
 
-    public void addCredit(String username, double amount) {
+    public void addCredit(String username, double amount, int day, int month, int year) {
         Account account = getAccount(username);
-        account.topUp(amount);
+        account.topUp(amount, day, month, year);
     }
 
     public Site getSite(String siteLocation) {
@@ -131,5 +133,23 @@ public class ECSManager {
         Account account = getAccount(username);
         accounts.remove(account);
     }
-}
 
+    public void printInvoiceHistory(String username) {
+        Account account = getAccount(username);
+        List<InvoiceItem> invoiceItems = new ArrayList<>(account.getInvoiceItems());
+
+        if (invoiceItems.isEmpty()) {
+            System.out.println("No invoice history for " + username);
+            return;
+        }
+
+        // Sort by date (oldest first)
+        Collections.sort(invoiceItems, Comparator.comparing(InvoiceItem::getDate));
+
+        System.out.println("Invoice History for " + username + ":");
+        System.out.println("Total transactions: " + invoiceItems.size());
+        for (InvoiceItem item : invoiceItems) {
+            System.out.print("  " + item);
+        }
+    }
+}

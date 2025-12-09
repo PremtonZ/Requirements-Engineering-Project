@@ -1,8 +1,11 @@
 package org.example;
 
+import java.time.LocalDate;
+
 public class Main {
     public static void main(String[] args) {
         ECSManager network = new ECSManager();
+        LocalDate now = LocalDate.now();
 
         Site site1 = network.createSite("Deutschwagram");
         Site site2 = network.createSite("Wien");
@@ -35,7 +38,7 @@ public class Main {
         Account max = network.getAccount("Max");
         System.out.println("Account: " + max.getUsername() + ", Credits: " + max.getCredit());
 
-        network.addCredit("Max", 200.0);
+        network.addCredit("Max", 200.0, now.getDayOfMonth(), now.getMonthValue(), now.getYear());
         Account maxAfter = network.getAccount("Max");
         System.out.println("Credit: " + maxAfter.getCredit());
 
@@ -52,5 +55,16 @@ public class Main {
         System.out.println("Total accounts: " + network.getAccountCount());
         network.deleteAccount("TestUser");
         System.out.println("Deleted. Total accounts: " + network.getAccountCount());
+
+        // Admin Manage Credits
+        network.createAccount("CreditUser");
+        network.addCredit("CreditUser", 150.0, now.getDayOfMonth(), now.getMonthValue(), now.getYear());
+        System.out.println("\nShow Balance: CreditUser = " + network.getAccount("CreditUser").getCredit() + " credits");
+
+        network.addCredit("CreditUser", 50.0, now.getDayOfMonth(), now.getMonthValue(), now.getYear());
+        System.out.println("Top-Up: +50.0 credits (150.0 -> " + network.getAccount("CreditUser").getCredit() + ")");
+
+        System.out.println("Balance History: " + network.getAccount("CreditUser").getInvoiceItems().size() + " transactions");
+        network.printInvoiceHistory("CreditUser");
     }
 }

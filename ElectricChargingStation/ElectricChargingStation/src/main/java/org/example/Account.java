@@ -54,7 +54,7 @@ public class Account {
     }
 
     public void pay(Charger charger, int duration, int kWh, int year, int month, int day) {
-        ChargingInvoiceItem charging = new ChargingInvoiceItem(invoiceItems.size(), charger, this, duration, kWh, year, month, day);
+        ChargingInvoiceItem charging = new ChargingInvoiceItem(invoiceItems.size(), charger, this, duration, kWh, day, month, year);
         double amount = charging.calculateTotal();
         if(amount <= credit) {
             credit -= amount;

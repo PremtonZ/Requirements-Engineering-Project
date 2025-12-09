@@ -5,6 +5,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AdminLoginSteps {
@@ -127,7 +129,8 @@ public class AdminLoginSteps {
             double currentCredits = account.getCredit();
             double difference = credits - currentCredits;
             if (difference > 0) {
-                TestContext.network.addCredit(username, difference);
+                LocalDate now = LocalDate.now();
+                TestContext.network.addCredit(username, difference, now.getDayOfMonth(), now.getMonthValue(), now.getYear());
             }
         }
     }
