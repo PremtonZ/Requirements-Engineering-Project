@@ -26,5 +26,25 @@ Feature: Manage Charging Point Status
     And I see charging point "DC_1" with mode "DC" and state "in operation free"
 
   Scenario: Read Charging Point
-  
+    Given I am logged in as admin
+      And a charging point "AC_1" exists at location "Deutschwagram" with mode "AC" and state "available"
+    When I view the charging point details for "AC_1" at location "Deutschwagram"
+    Then I see the following details:
+      | field    | value        |
+      | name     | AC_1         |
+      | location | Deutschwagram|
+      | mode     | AC           |
+      | state    | available    |
+    And the charging point status is shown as one of:
+      | available   |
+      | occupied    |
+      | out of order|
+
   Scenario: Update Charging Point Status
+    Given I am logged in as admin
+      And a charging point "AC_1" exists at location "Deutschwagram" with state "available"
+    When I update the charging point status for "AC_1" at location "Deutschwagram" to "out of order"
+      And I save the changes
+    Then the charging point "AC_1" has status "out of order"
+      And the updated status is stored in the system
+      And when I view charging point "AC_1" again I see state "out of order"
