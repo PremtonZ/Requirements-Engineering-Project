@@ -2,20 +2,20 @@ package org.example;
 
 public class Charger {
     private String name;
-    private Site site;
+    private ChargingStation chargingStation;
     private String mode;
     private String state;
 
-    public Charger(String name, Site site, String mode, String state) {
+    public Charger(String name, ChargingStation chargingStation, String mode, String state) {
         setName(name);
-        setSite(site);
+        setChargingStation(chargingStation);
         setMode(mode);
         setState(state);
     }
 
     public Charger(Charger charger) {
         setName(charger.getName());
-        setSite(charger.getSite());
+        setChargingStation(charger.getChargingStation());
         setMode(charger.getMode());
         setState(charger.getState());
     }
@@ -31,16 +31,20 @@ public class Charger {
         this.name = name;
     }
 
-    public Site getSite() {
-        return site;
+    public ChargingStation getChargingStation() {
+        return chargingStation;
     }
 
-    public void setSite(Site site) {
-        if(site != null) {
-            this.site = site;
+    public void setChargingStation(ChargingStation chargingStation) {
+        if(chargingStation != null) {
+            this.chargingStation = chargingStation;
         } else {
-            throw new NullPointerException("site is null");
+            throw new NullPointerException("chargingStation is null");
         }
+    }
+
+    public Site getSite() {
+        return chargingStation != null ? chargingStation.getSite() : null;
     }
 
     public String getMode() {
@@ -70,9 +74,9 @@ public class Charger {
         }
     }
 
-    public void checkForExistence(String name, Site site) {
-        if(this.name.equals(name) && this.site.equals(site)) {
-            throw new IllegalArgumentException("A Charger with that Name at the chosen location already exists");
+    public void checkForExistence(String name, ChargingStation chargingStation) {
+        if(this.name.equals(name) && this.chargingStation.equals(chargingStation)) {
+            throw new IllegalArgumentException("A Charger with that Name at the chosen charging station already exists");
         }
     }
 
@@ -82,7 +86,9 @@ public class Charger {
 
     @Override
     public String toString() {
-        return "Charger: " + name + ", Site: " + site.getLocation() + ", Mode: " + mode + ", State: " + state;
+        return "Charger: " + name + ", Station: " + (chargingStation != null ? chargingStation.getName() : "null") +
+                ", Location: " + (getSite() != null ? getSite().getLocation() : "null") +
+                ", Mode: " + mode + ", State: " + state;
     }
 
 }

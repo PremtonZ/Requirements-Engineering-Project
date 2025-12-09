@@ -88,27 +88,6 @@ public class AdminLoginSteps {
         }
     }
 
-    @Given("a charging point with name {string} exists at location {string}")
-    public void aChargingPointWithNameExistsAtLocation(String chargerName, String locationName) {
-        try {
-            TestContext.network.createCharger(chargerName, locationName, "AC", "in operation free");
-        } catch (IllegalArgumentException e) {
-        }
-    }
-
-    @Given("the following charging points exist:")
-    public void theFollowingChargingPointsExist(DataTable dataTable) {
-        for (int i = 1; i < dataTable.height(); i++) {
-            String name = dataTable.cell(i, 0);
-            String location = dataTable.cell(i, 1);
-            String mode = dataTable.cell(i, 2);
-            String state = dataTable.cell(i, 3);
-            try {
-                TestContext.network.createCharger(name, location, mode, state);
-            } catch (IllegalArgumentException e) {
-            }
-        }
-    }
 
     @Given("a customer account with username {string} exists")
     public void aCustomerAccountWithUsernameExists(String username) {
@@ -145,17 +124,48 @@ public class AdminLoginSteps {
     @Given("I am logged in as customer {string}")
     public void iAmLoggedInAsCustomer(String username) {
         try {
-            Account account = TestContext.network.getAccount(username);
-            if (account != null) {
-                TestContext.isCustomerLoggedIn = true;
-                TestContext.currentCustomer = username;
-                TestContext.canAccessCustomerAccount = true;
+            TestContext.network.getAccount(username);
+        } catch (IllegalArgumentException e) {
+            // Account doesn't exist, create it
+            try {
+                TestContext.network.createAccount(username);
+            } catch (IllegalArgumentException e2) {
+                // Account might have been created by another thread
             }
-        } catch (Exception e) {
-            TestContext.isCustomerLoggedIn = false;
-            TestContext.currentCustomer = null;
-            TestContext.canAccessCustomerAccount = false;
         }
+        TestContext.isCustomerLoggedIn = true;
+        TestContext.currentCustomer = username;
+        TestContext.canAccessCustomerAccount = true;
+    }
+
+    @Given("I am logged in as customer")
+    public void iAmLoggedInAsCustomer() {
+        // Default customer login without specific username
+        String defaultCustomer = "Max";
+        try {
+            TestContext.network.getAccount(defaultCustomer);
+        } catch (IllegalArgumentException e) {
+            try {
+                TestContext.network.createAccount(defaultCustomer);
+            } catch (IllegalArgumentException e2) {
+            }
+        }
+        TestContext.isCustomerLoggedIn = true;
+        TestContext.currentCustomer = defaultCustomer;
+        TestContext.canAccessCustomerAccount = true;
+    }
+
+    @Given("I am logged in as a customer")
+    public void iAmLoggedInAsACustomer() {
+        // Same as "I am logged in as customer"
+        iAmLoggedInAsCustomer();
+    }
+
+    @Given("I am logged in as owner")
+    public void iAmLoggedInAsOwner() {
+        TestContext.isLoggedIn = true;
+        TestContext.currentUser = "owner";
+        TestContext.canAccessDashboard = true;
     }
 
     @Given("location {string} has the following prices:")
