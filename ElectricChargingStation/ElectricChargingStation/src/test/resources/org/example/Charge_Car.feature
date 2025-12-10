@@ -5,8 +5,8 @@ Feature: Charge Car
 
     Background:
         Given I am logged in as customer
-        And a charging station with name "Stephansplatz" exists
-        And a charging point with name "AC_1" exists at charging station "Stephansplatz"
+        And a charging station with name "Stephansplatz" exists for charging
+        And a charging point with name "AC_1" exists at charging station "Stephansplatz" for charging
         And the charging point with name "AC_1" has the status "in Betrieb frei"
 
     Scenario: Choose Charging Point

@@ -27,10 +27,10 @@ public class ChargeCarSteps {
     private Account customerAccount;
 
     // Background steps
-    @Given("a charging station with name {string} exists")
-    public void aChargingStationWithNameExists(String stationName) {
+    @Given("a charging station with name {string} exists for charging")
+    public void aChargingStationWithNameExistsForCharging(String stationName) {
         assertTrue(TestContext.isCustomerLoggedIn, "Customer should be logged in");
-        
+
         // Based on feature file, "Stephansplatz" appears to be the location name
         // Create site if it doesn't exist
         try {
@@ -38,7 +38,7 @@ public class ChargeCarSteps {
         } catch (IllegalArgumentException e) {
             // Site already exists
         }
-        
+
         // Create charging station with same name (or use a default name)
         String actualStationName = stationName; // Use same name for station
         try {
@@ -46,26 +46,26 @@ public class ChargeCarSteps {
         } catch (IllegalArgumentException e) {
             // Station already exists
         }
-        
+
         selectedSite = TestContext.network.getSite(stationName);
         selectedStation = TestContext.network.getChargingStation(stationName, actualStationName);
         assertNotNull(selectedStation, "Charging station should exist");
     }
 
-    @Given("a charging point with name {string} exists at charging station {string}")
-    public void aChargingPointWithNameExistsAtChargingStation(String chargerName, String stationName) {
+    @Given("a charging point with name {string} exists at charging station {string} for charging")
+    public void aChargingPointWithNameExistsAtChargingStationForCharging(String chargerName, String stationName) {
         assertTrue(TestContext.isCustomerLoggedIn, "Customer should be logged in");
-        
+
         // stationName is the location name (e.g., "Stephansplatz")
         String actualStationName = stationName; // Station has same name as location
-        
+
         try {
             TestContext.network.createCharger(chargerName, stationName, actualStationName, "AC", "available");
         } catch (IllegalArgumentException e) {
             // Charger already exists, get it
             selectedCharger = TestContext.network.getCharger(stationName, actualStationName, chargerName);
         }
-        
+
         if (selectedCharger == null) {
             selectedCharger = TestContext.network.getCharger(stationName, actualStationName, chargerName);
         }
@@ -79,7 +79,7 @@ public class ChargeCarSteps {
         if (selectedCharger != null && selectedCharger.getName().equals(chargerName)) {
             selectedCharger.setState(mappedStatus);
         } else {
-                // Find charger by name
+            // Find charger by name
             if (selectedSite != null) {
                 for (ChargingStation station : selectedSite.getChargingStations()) {
                     for (Charger charger : station.getChargers()) {
@@ -89,7 +89,8 @@ public class ChargeCarSteps {
                             break;
                         }
                     }
-                    if (selectedCharger != null) break;
+                    if (selectedCharger != null)
+                        break;
                 }
             }
         }
@@ -127,7 +128,8 @@ public class ChargeCarSteps {
     public void iSelectTheChargingPoint(String chargerName) {
         assertNotNull(selectedStation, "Charging station should be selected");
         assertNotNull(selectedSite, "Site should be selected");
-        selectedCharger = TestContext.network.getCharger(selectedSite.getLocation(), selectedStation.getName(), chargerName);
+        selectedCharger = TestContext.network.getCharger(selectedSite.getLocation(), selectedStation.getName(),
+                chargerName);
         assertNotNull(selectedCharger, "Charging point should exist");
         TestContext.selectedCharger = selectedCharger;
         isInDetailsView = true;
@@ -136,13 +138,13 @@ public class ChargeCarSteps {
     @Then("I see the details of the charging point:")
     public void iSeeTheDetailsOfTheChargingPoint(DataTable dataTable) {
         assertNotNull(selectedCharger, "Charging point should be selected");
-        
+
         for (int i = 1; i < dataTable.height(); i++) {
             String field = dataTable.cell(i, 0);
             String expectedValue = dataTable.cell(i, 1);
-            
+
             String actualValue = null;
-            
+
             switch (field) {
                 case "location":
                     actualValue = selectedCharger.getSite().getLocation();
@@ -164,7 +166,7 @@ public class ChargeCarSteps {
                     actualValue = String.format(Locale.ROOT, "%.2f EUR", priceKwh);
                     break;
             }
-            
+
             if (actualValue != null) {
                 assertEquals(expectedValue, actualValue, "Field " + field + " should match");
             }
@@ -176,7 +178,7 @@ public class ChargeCarSteps {
         assertNotNull(selectedCharger, "Charging point should be selected");
         assertTrue(isInDetailsView, "Should be in details view");
         // Button exists if we're in details view and charger is available
-        assertEquals("available", selectedCharger.getState(), 
+        assertEquals("available", selectedCharger.getState(),
                 "Charger should be available to show start button");
     }
 
@@ -186,7 +188,8 @@ public class ChargeCarSteps {
         assertTrue(TestContext.isCustomerLoggedIn, "Customer should be logged in");
         assertNotNull(selectedStation, "Charging station should be selected");
         assertNotNull(selectedSite, "Site should be selected");
-        selectedCharger = TestContext.network.getCharger(selectedSite.getLocation(), selectedStation.getName(), chargerName);
+        selectedCharger = TestContext.network.getCharger(selectedSite.getLocation(), selectedStation.getName(),
+                chargerName);
         assertNotNull(selectedCharger, "Charging point should exist");
         TestContext.selectedCharger = selectedCharger;
         isInDetailsView = true;
@@ -196,10 +199,10 @@ public class ChargeCarSteps {
     public void iClickOnTheButton(String buttonText) {
         assertNotNull(selectedCharger, "Charging point should be selected");
         assertTrue(isInDetailsView, "Should be in details view");
-        
+
         if (buttonText.equals("Ladevorgang starten")) {
             // Start charging
-            assertEquals("available", selectedCharger.getState(), 
+            assertEquals("available", selectedCharger.getState(),
                     "Charger should be available to start charging");
             selectedCharger.setState("occupied");
             chargingCycleStarted = true;
@@ -207,7 +210,7 @@ public class ChargeCarSteps {
         } else if (buttonText.equals("Ladevorgang beenden")) {
             // Stop charging
             assertTrue(chargingCycleStarted, "Charging cycle should have been started");
-            assertEquals("occupied", selectedCharger.getState(), 
+            assertEquals("occupied", selectedCharger.getState(),
                     "Charger should be occupied");
             // Stop charging and create invoice
             stopChargingAndCreateInvoice();
@@ -217,7 +220,7 @@ public class ChargeCarSteps {
     @Then("I see a confirmation that charging can start now")
     public void iSeeAConfirmationThatChargingCanStartNow() {
         assertTrue(chargingCycleStarted, "Charging cycle should have started");
-        assertEquals("occupied", selectedCharger.getState(), 
+        assertEquals("occupied", selectedCharger.getState(),
                 "Charger should be occupied");
     }
 
@@ -252,7 +255,7 @@ public class ChargeCarSteps {
     @Then("it shows the button {string}")
     public void itShowsTheButton(String buttonText) {
         assertTrue(chargingCycleStarted, "Charging cycle should have started");
-        assertEquals("occupied", selectedCharger.getState(), 
+        assertEquals("occupied", selectedCharger.getState(),
                 "Charger should be occupied");
         // Button is shown
     }
@@ -270,10 +273,10 @@ public class ChargeCarSteps {
     private void stopChargingAndCreateInvoice() {
         assertNotNull(selectedCharger, "Charging point should be selected");
         assertTrue(chargingCycleStarted, "Charging cycle should have started");
-        
+
         // Get customer account
         customerAccount = TestContext.network.getAccount(TestContext.currentCustomer);
-        
+
         // Ensure customer has enough credits
         double currentCredits = customerAccount.getCredit();
         if (currentCredits < 100.0) {
@@ -285,14 +288,14 @@ public class ChargeCarSteps {
                 customerAccount.topUp(100.0 - currentCredits);
             }
         }
-        
+
         // Set prices
         TestContext.network.setSitePrices("Wien", 0.42, 0.0293, 0.55, 3.0);
-        
+
         // Create invoice: 27 minutes, 12 kWh (int), date: 2025-11-26
         selectedCharger.setState("available"); // Reset state before payment
         customerAccount.pay(selectedCharger, 27, 12, 2025, 11, 26);
-        
+
         // Get the created invoice
         List<InvoiceItem> items = customerAccount.getInvoiceItems();
         if (!items.isEmpty()) {
@@ -309,7 +312,7 @@ public class ChargeCarSteps {
                 }
             }
         }
-        
+
         chargingCycleCompleted = true;
         chargingCycleStarted = false;
     }
@@ -317,7 +320,7 @@ public class ChargeCarSteps {
     @Then("I see a confirmation that charging has stopped")
     public void iSeeAConfirmationThatChargingHasStopped() {
         assertTrue(chargingCycleCompleted, "Charging cycle should have been completed");
-        assertEquals("available", selectedCharger.getState(), 
+        assertEquals("available", selectedCharger.getState(),
                 "Charger should be available again");
     }
 
@@ -330,17 +333,17 @@ public class ChargeCarSteps {
     @Then("it creates an invoice containing a list of invoice items sorted by start time, including:")
     public void itCreatesAnInvoiceContainingAListOfInvoiceItemsSortedByStartTimeIncluding(DataTable dataTable) {
         assertNotNull(createdInvoice, "Invoice should have been created");
-        assertTrue(createdInvoice instanceof ChargingInvoiceItem, 
+        assertTrue(createdInvoice instanceof ChargingInvoiceItem,
                 "Invoice should be a ChargingInvoiceItem");
-        
+
         ChargingInvoiceItem chargingInvoice = (ChargingInvoiceItem) createdInvoice;
-        
+
         for (int i = 1; i < dataTable.height(); i++) {
             String field = dataTable.cell(i, 0);
             String expectedValue = dataTable.cell(i, 1);
-            
+
             String actualValue = null;
-            
+
             switch (field) {
                 case "invoice item number":
                     actualValue = String.valueOf(chargingInvoice.getInvoiceId());
@@ -392,7 +395,7 @@ public class ChargeCarSteps {
                     actualValue = String.format(Locale.ROOT, "%.2f EUR remaining", balance);
                     break;
             }
-            
+
             if (actualValue != null) {
                 assertEquals(expectedValue, actualValue, "Field " + field + " should match");
             }
@@ -410,7 +413,7 @@ public class ChargeCarSteps {
         assertNotNull(createdInvoice, "Invoice should have been created");
         assertNotNull(customerAccount, "Customer account should exist");
         List<InvoiceItem> items = customerAccount.getInvoiceItems();
-        assertTrue(items.contains(createdInvoice), 
+        assertTrue(items.contains(createdInvoice),
                 "Invoice should be in charging history");
     }
 
@@ -442,17 +445,17 @@ public class ChargeCarSteps {
     @Then("it shows a charging details list of following items:")
     public void itShowsAChargingDetailsListOfFollowingItems(DataTable dataTable) {
         assertNotNull(createdInvoice, "Invoice should exist");
-        assertTrue(createdInvoice instanceof ChargingInvoiceItem, 
+        assertTrue(createdInvoice instanceof ChargingInvoiceItem,
                 "Invoice should be a ChargingInvoiceItem");
-        
+
         ChargingInvoiceItem chargingInvoice = (ChargingInvoiceItem) createdInvoice;
-        
+
         for (int i = 1; i < dataTable.height(); i++) {
             String field = dataTable.cell(i, 0);
             String expectedValue = dataTable.cell(i, 1);
-            
+
             String actualValue = null;
-            
+
             switch (field) {
                 case "start time":
                     Date date = chargingInvoice.getDate();
@@ -487,11 +490,10 @@ public class ChargeCarSteps {
                     actualValue = String.format(Locale.ROOT, "%.2f EUR", total);
                     break;
             }
-            
+
             if (actualValue != null) {
                 assertEquals(expectedValue, actualValue, "Field " + field + " should match");
             }
         }
     }
 }
-
