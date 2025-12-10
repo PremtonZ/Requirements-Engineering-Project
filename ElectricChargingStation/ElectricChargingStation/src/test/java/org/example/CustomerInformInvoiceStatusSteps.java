@@ -72,9 +72,9 @@ public class CustomerInformInvoiceStatusSteps {
             Charger charger;
             try {
                 charger = TestContext.network.getCharger("Stephansplatz", "Station_A", "AC_1");
-                charger.setState("in operation free");
+                charger.setState("available");
             } catch (IllegalArgumentException e) {
-                TestContext.network.createCharger("AC_1", "Stephansplatz", "Station_A", "AC", "in operation free");
+                TestContext.network.createCharger("AC_1", "Stephansplatz", "Station_A", "AC", "available");
                 charger = TestContext.network.getCharger("Stephansplatz", "Station_A", "AC_1");
             }
 
