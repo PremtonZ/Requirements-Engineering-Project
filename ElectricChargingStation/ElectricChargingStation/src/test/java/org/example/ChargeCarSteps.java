@@ -30,7 +30,6 @@ public class ChargeCarSteps {
     public void aChargingStationWithNameExistsForCharging(String stationName) {
         assertTrue(TestContext.isCustomerLoggedIn, "Customer should be logged in");
 
-        // Based on feature file, "Stephansplatz" appears to be the location name
         // Create site if it doesn't exist
         try {
             TestContext.network.createSite(stationName);
@@ -38,11 +37,7 @@ public class ChargeCarSteps {
             // Site already exists
         }
 
-        // Set prices to match expected values (5.83 EUR total for 27 minutes and 12
-        // kWh)
-        // Price calculation: priceKwh * 12 + pricePpm * 27 = 5.83
-        // Using priceKwh = 0.42 and pricePpm = 0.0293: 0.42 * 12 + 0.0293 * 27 = 5.04 +
-        // 0.7911 = 5.8311 ≈ 5.83
+
         TestContext.network.setSitePrices(stationName, 0.42, 0.0293, 0.55, 3.0);
 
         // Create charging station with same name (or use a default name)
@@ -80,17 +75,16 @@ public class ChargeCarSteps {
 
     @Given("the charging point with name {string} has the status {string}")
     public void theChargingPointWithNameHasTheStatus(String chargerName, String status) {
-        // Map German status to English
-        String mappedStatus = mapStatus(status);
+
         if (selectedCharger != null && selectedCharger.getName().equals(chargerName)) {
-            selectedCharger.setState(mappedStatus);
+            selectedCharger.setState(status);
         } else {
             // Find charger by name
             if (selectedSite != null) {
                 for (ChargingStation station : selectedSite.getChargingStations()) {
                     for (Charger charger : station.getChargers()) {
                         if (charger.getName().equals(chargerName)) {
-                            charger.setState(mappedStatus);
+                            charger.setState(status);
                             selectedCharger = charger;
                             break;
                         }
@@ -101,16 +95,9 @@ public class ChargeCarSteps {
             }
         }
         assertNotNull(selectedCharger, "Charging point should exist");
-        assertEquals(mappedStatus, selectedCharger.getState(), "Status should be set correctly");
+        assertEquals(status, selectedCharger.getState(), "Status should be set correctly");
     }
 
-    private String mapStatus(String status) {
-        // Map German status to English
-        if (status.equals("in Betrieb frei")) {
-            return "available";
-        }
-        return status; // Return as-is if already in English
-    }
 
     // Scenario: Choose Charging Point
     @When("I go to the charging station with the name {string}")
@@ -186,7 +173,6 @@ public class ChargeCarSteps {
     public void aButtonThatSays(String buttonText) {
         assertNotNull(selectedCharger, "Charging point should be selected");
         assertTrue(isInDetailsView, "Should be in details view");
-        // Button exists if we're in details view and charger is available
         assertEquals("available", selectedCharger.getState(),
                 "Charger should be available to show start button");
     }
@@ -266,7 +252,6 @@ public class ChargeCarSteps {
         assertTrue(chargingCycleStarted, "Charging cycle should have started");
         assertEquals("occupied", selectedCharger.getState(),
                 "Charger should be occupied");
-        // Button is shown
     }
 
     // Scenario: Stop Charging Process
@@ -301,7 +286,6 @@ public class ChargeCarSteps {
                 // Can't directly reduce credits, so we'll pay the difference
                 // This is a workaround - ideally we'd set it directly
                 double difference = currentCredits - 50.0;
-                // Note: This is not ideal, but we need to match the expected balance
             }
         }
 
@@ -317,12 +301,8 @@ public class ChargeCarSteps {
             // This might cause the test to fail, but we'll handle it in the assertion
         }
 
-        // Set prices - use the location from the selected charger
         String locationName = selectedCharger.getSite().getLocation();
-        // Set prices to match expected values (5.83 EUR total for 27 minutes and 12
-        // kWh)
-        // Using priceKwh = 0.42 and pricePpm = 0.0293: 0.42 * 12 + 0.0293 * 27 = 5.04 +
-        // 0.7911 = 5.8311 ≈ 5.83
+
         TestContext.network.setSitePrices(locationName, 0.42, 0.0293, 0.55, 3.0);
 
         // Create invoice: 27 minutes, 12 kWh (int), date: 2025-11-26
@@ -506,22 +486,16 @@ public class ChargeCarSteps {
 
             // Set prices
             String locationName = selectedCharger.getSite().getLocation();
-            // Set prices to match expected values (5.83 EUR total for 27 minutes and 12
-            // kWh)
-            // Using priceKwh = 0.42 and pricePpm = 0.0293: 0.42 * 12 + 0.0293 * 27 = 5.04 +
-            // 0.7911 = 5.8311 ≈ 5.83
+
             TestContext.network.setSitePrices(locationName, 0.42, 0.0293, 0.55, 3.0);
 
-            // Set customer ID to 127 to match expected "CUST-00127"
-            // Note: customerId is final, but can be modified via reflection in most JVMs
+
             try {
                 java.lang.reflect.Field customerIdField = Account.class.getDeclaredField("customerId");
                 customerIdField.setAccessible(true);
                 customerIdField.setInt(customerAccount, 127);
             } catch (Exception e) {
                 // Reflection failed - customer ID will remain as assigned during account
-                // creation
-                // This might cause the test to fail, but we'll handle it in the assertion
             }
 
             // Create invoice: 27 minutes, 12 kWh (int), date: 2025-11-26

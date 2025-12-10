@@ -75,7 +75,6 @@ public class ManageChargingStationStatusSteps {
 
     @Given("the following charging points exist for {string}:")
     public void theFollowingChargingPointsExistFor(String stationName, DataTable dataTable) {
-        // Find the location and station
         Site foundSite = null;
         ChargingStation foundStation = null;
 
@@ -107,7 +106,6 @@ public class ManageChargingStationStatusSteps {
             try {
                 existingCharger = TestContext.network.getCharger(foundSite.getLocation(), stationName, chargerName);
             } catch (IllegalArgumentException e) {
-                // Charger doesn't exist, will create it
             }
 
             if (existingCharger != null) {
@@ -180,7 +178,6 @@ public class ManageChargingStationStatusSteps {
         assertNotNull(displayedChargers, "Charging points should be displayed");
         for (Charger charger : displayedChargers) {
             String state = charger.getState();
-            // Verify that status can be mapped to visual indicators
             assertTrue(state.equals("available") || state.equals("occupied") || state.equals("out of order"),
                     "Status should be mappable to visual indicator: " + state);
         }

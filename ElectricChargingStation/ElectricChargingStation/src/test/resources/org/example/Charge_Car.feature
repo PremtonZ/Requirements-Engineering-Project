@@ -7,7 +7,7 @@ Feature: Charge Car
         Given I am logged in as customer
         And a charging station with name "Stephansplatz" exists for charging
         And a charging point with name "AC_1" exists at charging station "Stephansplatz" for charging
-        And the charging point with name "AC_1" has the status "in Betrieb frei"
+        And the charging point with name "AC_1" has the status "available"
 
     Scenario: Choose Charging Point
         When I go to the charging station with the name "Stephansplatz"

@@ -7,34 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ManagePricesSteps {
 
-    // Set Charging Point Price (AC/DC) - Scenario not yet implemented in feature file
-    // @When("I set the charging point price for {string} at location {string} to AC price per kWh {string} and AC price per minute {string}")
-    // public void iSetTheChargingPointPriceForAtLocationToACPricePerKWhAndACPricePerMinute(String chargerName,
-    //         String locationName, String acKwh, String acPpm) {
-    //     Site site = TestContext.network.getSite(locationName);
-    //     site.setACKwh(Double.parseDouble(acKwh));
-    //     site.setACPpm(Double.parseDouble(acPpm));
-    // }
-
-    // @Then("the charging point {string} at location {string} has AC price per kWh {string}")
-    // public void theChargingPointAtLocationHasACPricePerKWh(String chargerName, String locationName,
-    //         String expectedPrice) {
-    //     Site site = TestContext.network.getSite(locationName);
-    //     assertEquals(Double.parseDouble(expectedPrice), site.getACKwh(), 0.001, "AC price per kWh should match");
-    // }
-
-    // @Then("the charging point {string} at location {string} has AC price per minute {string}")
-    // public void theChargingPointAtLocationHasACPricePerMinute(String chargerName, String locationName,
-    //         String expectedPrice) {
-    //     Site site = TestContext.network.getSite(locationName);
-    //     assertEquals(Double.parseDouble(expectedPrice), site.getACPpm(), 0.001, "AC price per minute should match");
-    // }
-
-    // @Then("the charging point price is saved successfully")
-    // public void theChargingPointPriceIsSavedSuccessfully() {
-    //     assertTrue(true, "Charging point price was set in previous step");
-    // }
-
     // Set Location Prices (AC/DC)
     @When("I set the location price for {string} to AC kWh {string}, AC per minute {string}, DC kWh {string}, and DC per minute {string}")
     public void iSetTheLocationPriceForToACKWhACPerMinuteDCKwhAndDCPerMinute(String locationName, String acKwh,

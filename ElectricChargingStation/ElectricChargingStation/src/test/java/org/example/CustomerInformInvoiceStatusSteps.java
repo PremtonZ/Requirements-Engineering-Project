@@ -57,9 +57,7 @@ public class CustomerInformInvoiceStatusSteps {
                 // Site already exists
             }
 
-            // Set prices to match expected values (5.83 EUR for 27 minutes and 12.4 kWh)
-            // Price calculation: priceKwh * kWh + ppm * minutes = 5.83
-            // For 12 kWh and 27 minutes: 0.42 * 12 + 0.0293 * 27 ≈ 5.04 + 0.79 ≈ 5.83
+
             TestContext.network.setSitePrices("Stephansplatz", 0.42, 0.0293, 0.55, 3.0);
 
             try {
