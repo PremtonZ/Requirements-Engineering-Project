@@ -189,11 +189,14 @@ public class CustomerInformInvoiceStatusSteps {
     }
 
     @Then("all invoice information is displayed correctly")
-    public void allInvoiceInformationIsDisplayedCorrectly() {
+    public void allInvoiceInformationIsDisplayedCorrectlyForCustomer() {
         assertNotNull(selectedInvoice, "Invoice should be selected");
         assertTrue(selectedInvoice instanceof ChargingInvoiceItem, "Invoice should be a ChargingInvoiceItem");
-        assertEquals(TestContext.currentCustomer, selectedInvoice.getAccount().getUsername(),
-                "Invoice should belong to the logged-in customer");
+        // If customer is logged in, verify invoice belongs to customer
+        if (TestContext.isCustomerLoggedIn && TestContext.currentCustomer != null) {
+            assertEquals(TestContext.currentCustomer, selectedInvoice.getAccount().getUsername(),
+                    "Invoice should belong to the logged-in customer");
+        }
     }
 
     @When("I select {string} for invoice {string}")

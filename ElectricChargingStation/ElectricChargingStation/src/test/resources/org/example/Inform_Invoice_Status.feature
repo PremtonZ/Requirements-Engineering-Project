@@ -21,4 +21,4 @@ Feature: Inform Invoice Status
       | loaded energy (kWh)       | 12.0 kWh                   |
       | price                     | 5.83 EUR                   |
       | customer identity         | Max                        |
-    And all invoice information is displayed correctly
+    And all invoice information is displayed correctly for admin
