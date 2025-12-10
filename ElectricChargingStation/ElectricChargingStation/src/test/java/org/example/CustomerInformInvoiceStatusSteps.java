@@ -7,7 +7,6 @@ import io.cucumber.java.en.When;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
@@ -143,15 +142,12 @@ public class CustomerInformInvoiceStatusSteps {
                     actualValue = chargingInvoice.getCharger().getMode();
                     break;
                 case "start time":
-                    Date date = chargingInvoice.getDate();
-                    LocalDateTime dateTime = LocalDateTime.ofInstant(
-                            date.toInstant(),
-                            ZoneId.systemDefault());
-                    // Set time to 14:10:00 as expected
-                    dateTime = LocalDateTime.of(
-                            dateTime.getYear(),
-                            dateTime.getMonthValue(),
-                            dateTime.getDayOfMonth(),
+                    java.util.Date date = chargingInvoice.getDate();
+                    LocalDate localDate = ((java.sql.Date) date).toLocalDate();
+                    LocalDateTime dateTime = LocalDateTime.of(
+                            localDate.getYear(),
+                            localDate.getMonthValue(),
+                            localDate.getDayOfMonth(),
                             14, 10, 0);
                     actualValue = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
                     break;
