@@ -87,4 +87,72 @@ public class DisplayChargingPointStatusSteps {
         assertTrue(TestContext.selectedLocation.getDCKwh() > 0, "DC kWh price should be set");
         assertTrue(TestContext.selectedLocation.getDCPpm() > 0, "DC per minute price should be set");
     }
+
+    // Read Charging Point Status
+    @When("I open the charging point {string} details")
+    public void iOpenTheChargingPointDetails(String chargerName) {
+        assertTrue(TestContext.isCustomerLoggedIn, "Customer should be logged in");
+        
+        // Find the charger by name
+        // First try to use selectedLocation if it's set
+        if (TestContext.selectedLocation != null) {
+            try {
+                TestContext.selectedCharger = TestContext.network.getCharger(
+                        TestContext.selectedLocation.getLocation(), 
+                        chargerName);
+            } catch (IllegalArgumentException e) {
+                // Try to find it manually at the selected location
+                TestContext.selectedCharger = null;
+                for (ChargingStation station : TestContext.selectedLocation.getChargingStations()) {
+                    for (Charger charger : station.getChargers()) {
+                        if (charger.getName().equals(chargerName)) {
+                            TestContext.selectedCharger = charger;
+                            break;
+                        }
+                    }
+                    if (TestContext.selectedCharger != null) {
+                        break;
+                    }
+                }
+            }
+        } else {
+            // If no location is selected, search across all sites
+            TestContext.selectedCharger = null;
+            for (Site site : TestContext.network.getSites()) {
+                try {
+                    TestContext.selectedCharger = TestContext.network.getCharger(
+                            site.getLocation(), 
+                            chargerName);
+                    TestContext.selectedLocation = site;
+                    break;
+                } catch (IllegalArgumentException e) {
+                    // Try to find it manually at this site
+                    for (ChargingStation station : site.getChargingStations()) {
+                        for (Charger charger : station.getChargers()) {
+                            if (charger.getName().equals(chargerName)) {
+                                TestContext.selectedCharger = charger;
+                                TestContext.selectedLocation = site;
+                                break;
+                            }
+                        }
+                        if (TestContext.selectedCharger != null) {
+                            break;
+                        }
+                    }
+                    if (TestContext.selectedCharger != null) {
+                        break;
+                    }
+                }
+            }
+        }
+        
+        assertNotNull(TestContext.selectedCharger, "Charging point " + chargerName + " should exist");
+    }
+
+    @Then("I see the charging point status being {string}")
+    public void iSeeTheChargingPointStatusBeing(String expectedStatus) {
+        assertNotNull(TestContext.selectedCharger, "Charging point should be selected");
+        assertEquals(expectedStatus, TestContext.selectedCharger.getState(), 
+                "Charging point status should match");
+    }
 }
