@@ -117,8 +117,7 @@ public class InformInvoiceStatusSteps {
                             localDate.getYear(),
                             localDate.getMonthValue(),
                             localDate.getDayOfMonth(),
-                            14, 10, 0
-                    );
+                            14, 10, 0);
                     actualValue = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
                     break;
                 case "location name":
@@ -151,10 +150,9 @@ public class InformInvoiceStatusSteps {
         }
     }
 
-    @Then("all invoice information is displayed correctly")
-    public void allInvoiceInformationIsDisplayedCorrectly() {
+    @Then("all invoice information is displayed correctly for admin")
+    public void allInvoiceInformationIsDisplayedCorrectlyForAdmin() {
         assertNotNull(selectedInvoice, "Invoice should be selected");
         assertTrue(selectedInvoice instanceof ChargingInvoiceItem, "Invoice should be a ChargingInvoiceItem");
     }
 }
-
